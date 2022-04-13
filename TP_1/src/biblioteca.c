@@ -89,9 +89,11 @@ int DescuentoCredito(float precio, int descuento)
 	precioDescuentoAplicado = (float)precio - precioDescuento;
 
 	return precioDescuentoAplicado;
-}
-float MostrarFlotante(float)
+}a
+float MostrarFlotante()
 {
+
+
 	return 0;
 }
 
