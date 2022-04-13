@@ -92,10 +92,10 @@ float DescuentoDebito(float precio, int descuento)
 }
 float InteresCredito(float precio, int interes)
 {
-	int precioInteres;
+	float precioInteres;
 	float precioInteresAplicado;
 
-	precioInteres = ((float)precio * interes)/ 100;
+	precioInteres = (precio * interes)/ 100;
 
 	precioInteresAplicado = precio + precioInteres;
 
