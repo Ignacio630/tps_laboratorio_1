@@ -79,21 +79,27 @@ float utn_GetFloat(float* pResultado, char* mensaje, char* mensajeError, float m
 	}
 	return retorno;
 }
-int DescuentoCredito(float precio, int descuento)
+float DescuentoDebito(float precio, int descuento)
 {
 	float precioDescuento;
 	int precioDescuentoAplicado;
 
-	precioDescuento = (precio * descuento)/ 100;
+	precioDescuento = (float)(precio * descuento)/ 100;
 
-	precioDescuentoAplicado = (float)precio - precioDescuento;
+	precioDescuentoAplicado = precio - precioDescuento;
 
 	return precioDescuentoAplicado;
-}a
-float MostrarFlotante()
-{
-
-
-	return 0;
 }
+float InteresCredito(float precio, int interes)
+{
+	int precioInteres;
+	float precioInteresAplicado;
+
+	precioInteres = ((float)precio * interes)/ 100;
+
+	precioInteresAplicado = precio + precioInteres;
+
+	return precioInteresAplicado;
+}
+
 

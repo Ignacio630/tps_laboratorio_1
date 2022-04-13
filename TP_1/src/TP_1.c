@@ -58,7 +58,8 @@ int main()
 			break;
 
 			case 3:
-				printf("\n%d", DescuentoCredito(precioAerolineas, 10));
+				printf("%.2f\n", DescuentoDebito(precioAerolineas, 10));
+				printf("%.2f\n", InteresCredito(precioAerolineas, 25));
 			break;
 			case 4:
 			break;
