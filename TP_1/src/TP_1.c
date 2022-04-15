@@ -3,33 +3,33 @@
  Name        : Ignacio Javier Medici
  Division    : C
  1 Enunciado
- Una agencia de viaje necesita calcular costos para sus vuelos de Latam y Aerolíneas Argentinas
+ Una agencia de viaje necesita calcular costos para sus vuelos de Latam y Aerolï¿½neas Argentinas
  para ofrecerlos a sus clientes.
- Se deberá ingresar por cada vuelo los km totales y el precio total del mismo.
- El objetivo de la aplicación es mostrar las diferentes opciones de pagos a sus clientes.
- Para ello el programa iniciará y contará con un menú de opciones:
- 1. Ingresar Kilómetros: ( km=x)
- 2. Ingresar Precio de Vuelos: (Aerolíneas=y, Latam=z)
-  - Precio vuelo Aerolíneas:
+ Se deberï¿½ ingresar por cada vuelo los km totales y el precio total del mismo.
+ El objetivo de la aplicaciï¿½n es mostrar las diferentes opciones de pagos a sus clientes.
+ Para ello el programa iniciarï¿½ y contarï¿½ con un menï¿½ de opciones:
+ 1. Ingresar Kilï¿½metros: ( km=x)
+ 2. Ingresar Precio de Vuelos: (Aerolï¿½neas=y, Latam=z)
+  - Precio vuelo Aerolï¿½neas:
   - Precio vuelo Latam:
  3. Calcular todos los costos:
-  a) Tarjeta de débito (descuento 10%)
-  b) Tarjeta de crédito (interés 25%)
+  a) Tarjeta de dï¿½bito (descuento 10%)
+  b) Tarjeta de crï¿½dito (interï¿½s 25%)
   c) Bitcoin (1BTC -> 4606954.55 Pesos Argentinos)
   d) Mostrar precio por km (precio unitario)
-  e) Mostrar diferencia de precio ingresada (Latam - Aerolíneas)
+  e) Mostrar diferencia de precio ingresada (Latam - Aerolï¿½neas)
  4. Informar Resultados
  Latam:
-  a) Precio con tarjeta de débito: r
-  b) Precio con tarjeta de crédito: r
+  a) Precio con tarjeta de dï¿½bito: r
+  b) Precio con tarjeta de crï¿½dito: r
   c) Precio pagando con bitcoin : r
   d) Precio unitario: r
- Aerolíneas:
-  a) Precio con tarjeta de débito: r
-  b) Precio con tarjeta de crédito: r
+ Aerolï¿½neas:
+  a) Precio con tarjeta de dï¿½bito: r
+  b) Precio con tarjeta de crï¿½dito: r
   c) Precio pagando con bitcoin : r
   d) Precio unitario: r
- La diferencia de precio es : r “
+ La diferencia de precio es : r ï¿½
   5. Carga forzada de datos
   6. Salir
  ============================================================================
@@ -60,6 +60,7 @@ int main()
 			case 3:
 				printf("%.2f\n", DescuentoDebito(precioAerolineas, 10));
 				printf("%.2f\n", InteresCredito(precioAerolineas, 25));
+				printf("%f\n", CalcularBTC(precioLatam, BTC));
 			break;
 			case 4:
 			break;

@@ -101,5 +101,41 @@ float InteresCredito(float precio, int interes)
 
 	return precioInteresAplicado;
 }
+float CalcularBTC(int precio, float precioEnBTC)
+{
+	float resultado;
+
+	resultado = (float)precio / precioEnBTC;
+
+	return resultado;
+}
+int MostrarEntero(int enteroIngresado, char* mensaje , char* mensajeError)
+{
+	int resultado;
+	if(enteroIngresado != NULL && mensaje !=NULL && mensajeError != NULL)
+	{
+		scanf("%d", enteroIngresado);
+	}
+	else
+	{
+		printf("%s", mensajeError);
+	}
+	resultado = enteroIngresado;
+	return resultado;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

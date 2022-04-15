@@ -18,6 +18,8 @@ int utn_GetNumero(int*, char*, char* , int , int , int );
 float utn_GetFloat(float*, char*, char*, float, float, int);
 float DescuentoDebito(float, int);
 float InteresCredito(float, int);
-int CalcularBTC(float, int);
+float CalcularBTC(int, float);
+int MostrarEntero(int, char* , char*);
+float MostrarFlotante(float, char* , char*);
 
 #endif /* BIBLIOTECA_H_ */
