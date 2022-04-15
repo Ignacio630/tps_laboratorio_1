@@ -120,7 +120,6 @@ int MostrarEntero(int enteroIngresado, char* mensaje , char* mensajeError)
 	{
 		printf("%s", mensajeError);
 	}
-	resultado = enteroIngresado;
 	return resultado;
 }
 
