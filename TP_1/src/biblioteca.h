@@ -10,7 +10,9 @@
 #include <stdio_ext.h>
 #include <stdlib.h>
 #define BTC 4606954.55
-
+/// @brief
+/// @param
+/// @return
 int utn_GetEntero(int*, char*, char*);
 float utn_GetFloat(float*, char*, char*);
 float DescuentoDebito(float, int);
@@ -22,6 +24,6 @@ void MostrarEntero(char*, int);
 void MostrarFlotante(char*, float);
 void MostrarBTC(char* , float );
 void MostrarResultados(char*, float, float, float, float, float, float);
-void MostrarCargaForzada();
+void MostrarCargaForzada(int , float , float);
 
 #endif /* BIBLIOTECA_H_ */

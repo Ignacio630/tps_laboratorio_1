@@ -48,9 +48,9 @@ float utn_GetFloat(float* flotanteIngresado, char* mensaje, char* mensajeError)
 float DescuentoDebito(float precioIngresado, int descuento)
 {
 	float precioDescuento;
-	int precioDescuentoAplicado;
+	float precioDescuentoAplicado;
 
-	precioDescuento = (float)(precioIngresado * descuento)/ 100;
+	precioDescuento = (precioIngresado * descuento)/ 100;
 
 	precioDescuentoAplicado = precioIngresado - precioDescuento;
 
@@ -80,7 +80,7 @@ float CalcularPrecioUnitario(float precioIngresado, float kmIngresado, char* men
 	float resultado;
 	if(kmIngresado > 1)
 	{
-	resultado = precioIngresado / kmIngresado;
+		resultado = precioIngresado / kmIngresado;
 	}
 	else
 	{
@@ -104,7 +104,22 @@ void MostrarResultados(char* mensaje, float precioAerolineas, float debito, floa
 	printf("\nC) Precio pagando con bitcoin: $ %f BTC", bitcoin);
 	printf("\nD) Mostrar precio unitario: $ %.2f\n", precioUnitario);
 }
-
+void MostrarCargaForzada(int kmIngresados, float precioAerolineas, float precioLatam)
+{
+	printf("KMs Ingresados: %d\n", kmIngresados);
+	printf("\nPrecio Aerolineas: $%.2f\n", precioAerolineas);
+	printf("A) Precio con tarjeta de debito: $ %.2f", DescuentoDebito(precioAerolineas, 10));
+	printf("\nB) Precio con tarjeta de credito: $ %.2f", InteresCredito(precioAerolineas, 25));
+	printf("\nC) Precio pagando con bitcoin: $ %f BTC", CalcularBTC(precioAerolineas, BTC));
+	printf("\nD) Mostrar precio unitario: $ %.2f\n", CalcularPrecioUnitario(precioAerolineas, kmIngresados, "Error no se puede dividir por 0"));
+    /////////////////////////////////////////////////////////////////
+	printf("\nPrecio Latam: $%.2f\n", precioLatam);
+	printf("A) Precio con tarjeta de debito: $ %.2f", DescuentoDebito(precioLatam, 10));
+	printf("\nB) Precio con tarjeta de credito: $ %.2f", InteresCredito(precioLatam, 25));
+	printf("\nC) Precio pagando con bitcoin: $ %f BTC", CalcularBTC(precioLatam, BTC));
+	printf("\nD) Mostrar precio unitario: $ %.2f\n", CalcularPrecioUnitario(precioLatam, kmIngresados, "Error no se puede dividir por 0"));
+	printf("\nLa diferencia de precio es: $ %.2f\n", DiferenciaPrecios(precioAerolineas, precioLatam));
+}
 
 
 
