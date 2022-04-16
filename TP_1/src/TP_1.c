@@ -43,26 +43,54 @@ int main()
 	int kmIngresados = 0;
 	float precioAerolineas = 0;
 	float precioLatam = 0;
-
+	int opcion;
+	float credito = 0;
+	float debito = 0;
+	float precioUnitario = 0;
+	float bitcoin = 0;
+	float diferenciaDePrecio = 0;
 	do
 	{
-		switch(MenuPrincipal(kmIngresados, precioAerolineas, precioLatam))
+		printf("1. Ingresar kilometros(km = %d)\n", kmIngresados);
+		printf("2. Ingresar precio de vuelos (Aerolineas=%.2f , Latam=%.2f )\n", precioAerolineas, precioLatam);
+		printf("3. Calcular todos los costos\n");
+		printf("4. Informar resultados\n");
+		printf("5. Carga forzada de datos\n");
+		printf("6. Salir\n");
+		printf("Ingrese una opcion\n");
+		scanf("%d", &opcion);
+
+		switch(opcion)
 		{
 			case 1:
-				utn_GetNumero(&kmIngresados, "Ingrese los km de su viaje: \n", "ERROR ingrese kilometros validos\n", 1, INTMAX, 999);
+				utn_GetEntero(&kmIngresados, "Ingrese los km de su viaje: \n", "ERROR ingrese kilometros validos\n");
 			break;
 
 			case 2:
-				utn_GetFloat(&precioAerolineas, "Ingrese precio del vuelo Aerolineas Argentinas\n", "ERROR el precio ingresado es invalido\n", 1, FLOATMAX, 999);
-				utn_GetFloat(&precioLatam, "Ingrese precio del vuelo Latam\n", "ERROR el precio ingresado es invalido\n", 1, FLOATMAX, 999);
+				utn_GetFloat(&precioAerolineas, "Ingrese precio del vuelo Aerolineas Argentinas\n", "ERROR el precio ingresado es invalido\n");
+				utn_GetFloat(&precioLatam, "Ingrese precio del vuelo Latam\n", "ERROR el precio ingresado es invalido\n");
 			break;
 
 			case 3:
-				printf("%.2f\n", DescuentoDebito(precioAerolineas, 10));
-				printf("%.2f\n", InteresCredito(precioAerolineas, 25));
-				printf("%f\n", CalcularBTC(precioLatam, BTC));
+				if(precioAerolineas > 0 && precioLatam > 0)
+				{
+					debito = DescuentoDebito(precioAerolineas, 10);
+					credito = InteresCredito(precioAerolineas, 25);
+					bitcoin = CalcularBTC(precioAerolineas, BTC);
+					precioUnitario = CalcularPrecioUnitario(precioAerolineas, kmIngresados, "Error no se puede dividir por 0");
+					diferenciaDePrecio = DiferenciaPrecios(precioAerolineas, precioLatam);
+					printf("Calculo terminado :)\n");
+				}
+				else
+				{
+					printf("Error!! El calculo no pudo hacer por falta de datos :(\nPor favor reingrese los precios, gracias :) \n");
+				}
 			break;
 			case 4:
+				printf("KMs Ingresados: %d\n", kmIngresados);
+				MostrarResultados("\nPrecio Aerolineas: ", precioAerolineas, debito, credito, bitcoin, diferenciaDePrecio, precioUnitario);
+				MostrarResultados("\nPrecio Latam: ", precioAerolineas, debito, credito, bitcoin, diferenciaDePrecio, precioUnitario);
+				printf("\nLa diferencia de precio es: %.2f \n", diferenciaDePrecio);
 			break;
 
 			case 5:

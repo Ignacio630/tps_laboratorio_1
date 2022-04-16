@@ -7,19 +7,21 @@
 
 #ifndef BIBLIOTECA_H_
 #define BIBLIOTECA_H_
-#include <stdio.h>
+#include <stdio_ext.h>
 #include <stdlib.h>
-#define FLOATMAX 4000000000
-#define INTMAX 4000000000
 #define BTC 4606954.55
 
-int MenuPrincipal(int, float, float);
-int utn_GetNumero(int*, char*, char* , int , int , int );
-float utn_GetFloat(float*, char*, char*, float, float, int);
+int utn_GetEntero(int*, char*, char*);
+float utn_GetFloat(float*, char*, char*);
 float DescuentoDebito(float, int);
 float InteresCredito(float, int);
-float CalcularBTC(int, float);
-int MostrarEntero(int, char* , char*);
-float MostrarFlotante(float, char* , char*);
+float CalcularBTC(float, float);
+float CalcularPrecioUnitario(float, float, char*);
+float DiferenciaPrecios(float , float);
+void MostrarEntero(char*, int);
+void MostrarFlotante(char*, float);
+void MostrarBTC(char* , float );
+void MostrarResultados(char*, float, float, float, float, float, float);
+void MostrarCargaForzada();
 
 #endif /* BIBLIOTECA_H_ */

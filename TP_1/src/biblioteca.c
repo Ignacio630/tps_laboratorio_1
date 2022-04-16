@@ -7,133 +7,103 @@
 
 #include "biblioteca.h"
 
-int MenuPrincipal(int kmIngresado, float precioAerolineas, float precioLatam)
-{
-	int opcion;
 
-	printf("1. Ingresar kilometros(km = %d)\n", kmIngresado);
-	printf("2. Ingresar precio de vuelos (Aerolineas=%.2f , Latam=%.2f )\n", precioAerolineas, precioLatam);
-	printf("3. Calcular todos los costos\n");
-	printf("4. Informar resultados\n");
-	printf("5. Carga forzada de datos\n");
-	printf("6. Salir\n");
-	printf("Ingrese una opcion\n");
-	scanf("%d", &opcion);
-
-
-	return opcion;
-}
-int utn_GetNumero(int* pResultado, char* mensaje, char* mensajeError, int minimo, int maximo, int reintentos)
+int utn_GetEntero(int* enteroIngresado, char*mensaje, char* mensajeError)
 {
 	setbuf(stdout, NULL);
-	int retorno = -1;
-	int bufferint;
+	int bufferInt;
 
-	if(pResultado != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos >= 0)
+	if(enteroIngresado >= 0 && mensaje != NULL && mensajeError != NULL)
 	{
-		do
-		{
-			printf("%s", mensaje);
-			scanf("%d", &bufferint);
-
-			if(bufferint <= maximo && bufferint >= minimo)
-			{
-				*pResultado = bufferint;
-				retorno = 0;
-				break;
-			}
-			else
-			{
-				printf("%s", mensajeError);
-				reintentos--;
-			}
-		}while(reintentos >= 0);
-	}
-
-	return retorno;
-}
-float utn_GetFloat(float* pResultado, char* mensaje, char* mensajeError, float minimo, float maximo, int reintentos)
-{
-	setbuf(stdout, NULL);
-	int retorno = -1;
-	float bufferFloat;
-
-	if(pResultado != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos >= 0)
-	{
-		do
-		{
-			printf("%s", mensaje);
-			scanf("%f", &bufferFloat);
-			if(bufferFloat <= maximo && bufferFloat >= minimo)
-			{
-				*pResultado = bufferFloat;
-				retorno = 0;
-				break;
-			}
-			else
-			{
-				printf("%s", mensajeError);
-				reintentos--;
-			}
-		}while(reintentos >= 0);
-	}
-	return retorno;
-}
-float DescuentoDebito(float precio, int descuento)
-{
-	float precioDescuento;
-	int precioDescuentoAplicado;
-
-	precioDescuento = (float)(precio * descuento)/ 100;
-
-	precioDescuentoAplicado = precio - precioDescuento;
-
-	return precioDescuentoAplicado;
-}
-float InteresCredito(float precio, int interes)
-{
-	float precioInteres;
-	float precioInteresAplicado;
-
-	precioInteres = (precio * interes)/ 100;
-
-	precioInteresAplicado = precio + precioInteres;
-
-	return precioInteresAplicado;
-}
-float CalcularBTC(int precio, float precioEnBTC)
-{
-	float resultado;
-
-	resultado = (float)precio / precioEnBTC;
-
-	return resultado;
-}
-int MostrarEntero(int enteroIngresado, char* mensaje , char* mensajeError)
-{
-	int resultado;
-	if(enteroIngresado != NULL && mensaje !=NULL && mensajeError != NULL)
-	{
-		scanf("%d", enteroIngresado);
+		printf("%s", mensaje);
+		__fpurge(stdin);
+		scanf("%d", &bufferInt);
+		*enteroIngresado = bufferInt;
 	}
 	else
 	{
 		printf("%s", mensajeError);
 	}
+
+	return *enteroIngresado;
+}
+float utn_GetFloat(float* flotanteIngresado, char* mensaje, char* mensajeError)
+{
+	setbuf(stdout, NULL);
+	float bufferFloat;
+
+	if(flotanteIngresado >= 0 && mensaje != NULL && mensajeError != NULL)
+	{
+		printf("%s", mensaje);
+		scanf("%f", &bufferFloat);
+		*flotanteIngresado = bufferFloat;
+	}
+	else
+	{
+		printf("%s", mensajeError);
+	}
+
+	return *flotanteIngresado;
+}
+float DescuentoDebito(float precioIngresado, int descuento)
+{
+	float precioDescuento;
+	int precioDescuentoAplicado;
+
+	precioDescuento = (float)(precioIngresado * descuento)/ 100;
+
+	precioDescuentoAplicado = precioIngresado - precioDescuento;
+
+	return precioDescuentoAplicado;
+}
+float InteresCredito(float precioIngresado, int interesIngresado)
+{
+	float precioInteres;
+	float precioInteresAplicado;
+
+	precioInteres = (precioIngresado * interesIngresado)/ 100;
+
+	precioInteresAplicado = precioIngresado + precioInteres;
+
+	return precioInteresAplicado;
+}
+float CalcularBTC(float precioIngresado, float precioEnBTC)
+{
+	float resultado;
+
+	resultado = precioIngresado / precioEnBTC;
+
 	return resultado;
 }
+float CalcularPrecioUnitario(float precioIngresado, float kmIngresado, char* mensajeError)
+{
+	float resultado;
+	if(kmIngresado > 1)
+	{
+	resultado = precioIngresado / kmIngresado;
+	}
+	else
+	{
+		printf("%s\n", mensajeError);
+	}
+	return resultado;
+}
+float DiferenciaPrecios(float precioAerolineas, float precioLatam)
+{
+	float resultado;
 
+	resultado = precioAerolineas - precioLatam;
 
-
-
-
-
-
-
-
-
-
-
+	return resultado;
+}
+void MostrarResultados(char* mensaje, float precioAerolineas, float debito, float credito, float bitcoin, float diferencia, float precioUnitario)
+{
+	printf("%s %.2f\n", mensaje, precioAerolineas);
+	printf("A) Precio con tarjeta de debito: $ %.2f", debito);
+	printf("\nB) Precio con tarjeta de credito: $ %.2f", credito);
+	printf("\nC) Precio pagando con bitcoin: $ %f BTC", bitcoin);
+	printf("\nD) Mostrar precio unitario: $ %.2f\n", precioUnitario);
+}
 
 
 
