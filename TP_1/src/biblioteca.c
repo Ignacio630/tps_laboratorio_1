@@ -29,9 +29,8 @@ int ValidarEntero(int enteroIngresado, int minimo, char* mensajeError)
 	}
 	return resultado;
 }
-float PedirFlotante()
+float PedirFlotante(float flotanteIngresado)
 {
-	float flotanteIngresado;
 	printf("Por favor ingrese el precio del vuelo: \n");
 	scanf("%f", &flotanteIngresado);
 	flotanteIngresado = ValidarEntero(flotanteIngresado, 1, "Error el precio ingresado es menor a 0.\n Reingrese otra vez los precios :)\n");
@@ -116,7 +115,14 @@ float DiferenciaPrecios(float precioAerolineas, float precioLatam)
 {
 	float resultado;
 
-	resultado = precioAerolineas - precioLatam;
+	if(precioAerolineas >= precioLatam)
+	{
+		resultado = precioAerolineas - precioLatam;
+	}
+	else
+	{
+	  resultado = precioLatam - precioAerolineas;
+	}
 
 	return resultado;
 }

@@ -25,7 +25,7 @@ int ValidarEntero(int, int, char*);
 /// @fn float PedirFlotante()
 /// @brief Esta funcion permite pedirle un flotante al usuario
 /// @return flotanteIngresado
-float PedirFlotante();
+float PedirFlotante(float);
 /// @fn float ValidarFlotante(float flotanteIngresado, int minimo, char* mensajeError)
 /// @brief Esta funcion permite validar los flotantes que se ingresaron con la funcion PedirFlotante
 /// @param flotanteIngresado = es el flotante ingresado por el usuario

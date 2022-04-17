@@ -44,7 +44,6 @@ int main()
 	float precioAerolineas = 0;
 	float precioLatam = 0;
 	int opcion;
-	int opcionSubMenu;
 
 	float credito = 0;
 	float debito = 0;
@@ -74,11 +73,11 @@ int main()
 				switch(SubMenu())
 					{
 					case 1: //pide el precio de el vuelo de Aerolineas
-						precioAerolineas = PedirFlotante();
+						precioAerolineas = PedirFlotante(precioAerolineas);
 						printf("Precio de aerolineas ingresado con exito! :)");
 					break;
 					case 2: //pide el precio de el vuelo de Latam
-						precioLatam = PedirFlotante();
+						precioLatam = PedirFlotante(precioLatam);
 						printf("Precio de Latam ingresado con exito! :)");
 					break;
 					}
@@ -101,7 +100,7 @@ int main()
 			case 4:
 				printf("KMs Ingresados: %d\n", kmIngresados);
 				MostrarResultados("\nPrecio Aerolineas: ", precioAerolineas, debito, credito, bitcoin, diferenciaDePrecio, precioUnitario);
-				MostrarResultados("\nPrecio Latam: ", precioAerolineas, debito, credito, bitcoin, diferenciaDePrecio, precioUnitario);
+				MostrarResultados("\nPrecio Latam: ", precioLatam, debito, credito, bitcoin, diferenciaDePrecio, precioUnitario);
 				printf("\nLa diferencia de precio es: %.2f \n", diferenciaDePrecio);
 			break;
 
