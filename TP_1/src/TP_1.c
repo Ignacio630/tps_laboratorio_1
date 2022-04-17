@@ -44,13 +44,16 @@ int main()
 	float precioAerolineas = 0;
 	float precioLatam = 0;
 	int opcion;
+
 	float credito = 0;
 	float debito = 0;
 	float precioUnitario = 0;
 	float bitcoin = 0;
 	float diferenciaDePrecio = 0;
+
 	do
 	{
+		system("clear");
 		printf("1. Ingresar kilometros(km = %d)\n", kmIngresados);
 		printf("2. Ingresar precio de vuelos (Aerolineas=%.2f , Latam=%.2f )\n", precioAerolineas, precioLatam);
 		printf("3. Calcular todos los costos\n");
@@ -63,14 +66,22 @@ int main()
 		switch(opcion)
 		{
 			case 1:
-				utn_GetEntero(&kmIngresados, "Ingrese los km de su viaje: \n", "ERROR ingrese kilometros validos\n");
+				kmIngresados = PedirEntero();
 			break;
 
 			case 2:
-				utn_GetFloat(&precioAerolineas, "Ingrese precio del vuelo Aerolineas Argentinas\n", "ERROR el precio ingresado es invalido\n");
-				utn_GetFloat(&precioLatam, "Ingrese precio del vuelo Latam\n", "ERROR el precio ingresado es invalido\n");
+				switch (SubMenu())
+				{
+					case 1:
+						precioAerolineas = PedirFlotante();
+						printf("Precio de aerolineas ingresado con exito! :)");
+					break;
+					case 2:
+						precioLatam = PedirFlotante();
+						printf("Precio de Latam ingresado con exito! :)");
+					break;
+				}
 			break;
-
 			case 3:
 				if(precioAerolineas > 0 && precioLatam > 0)
 				{
@@ -99,6 +110,7 @@ int main()
 
 			case 6:
 				seguir = 'n';
+				printf("Gracias por usar mi app :) \nVuelva pronto!\n");
 			break;
 			default:
 				printf("Opcion Incorrecta\n");

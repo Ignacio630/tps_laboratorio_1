@@ -8,42 +8,64 @@
 #include "biblioteca.h"
 
 
-int utn_GetEntero(int* enteroIngresado, char*mensaje, char* mensajeError)
+int PedirEntero()
 {
-	setbuf(stdout, NULL);
-	int bufferInt;
-
-	if(enteroIngresado >= 0 && mensaje != NULL && mensajeError != NULL)
-	{
-		printf("%s", mensaje);
-		__fpurge(stdin);
-		scanf("%d", &bufferInt);
-		*enteroIngresado = bufferInt;
-	}
-	else
-	{
-		printf("%s", mensajeError);
-	}
-
-	return *enteroIngresado;
+	int enteroIngresado;
+	printf("Ingrese los km del viaje: \n");
+	scanf("%d", &enteroIngresado);
+	enteroIngresado = ValidarEntero(enteroIngresado, 1, "Error, los km ingresados tienen que ser mayor a 0");
+	return enteroIngresado;
 }
-float utn_GetFloat(float* flotanteIngresado, char* mensaje, char* mensajeError)
+int ValidarEntero(int enteroIngresado, int minimo, char* mensajeError)
 {
-	setbuf(stdout, NULL);
-	float bufferFloat;
-
-	if(flotanteIngresado >= 0 && mensaje != NULL && mensajeError != NULL)
+	int resultado;
+	if(enteroIngresado > minimo)
 	{
-		printf("%s", mensaje);
-		scanf("%f", &bufferFloat);
-		*flotanteIngresado = bufferFloat;
+		resultado = enteroIngresado;
 	}
 	else
 	{
-		printf("%s", mensajeError);
+		printf("%s\n", mensajeError);
 	}
+	return resultado;
+}
+float PedirFlotante()
+{
+	float flotanteIngresado;
+	printf("Ingrese precio del vuelo: \n");
+	scanf("%f", &flotanteIngresado);
+	flotanteIngresado = ValidarEntero(flotanteIngresado, 1, "Error el precio ingresado es menor a 0.\n Reingrese otra vez los precios :)\n");
+	return flotanteIngresado;
+}
+float ValidarFlotante(float flotanteIngresado, int minimo, char* mensajeError)
+{
+	int resultado;
+	if(flotanteIngresado > minimo)
+	{
+		resultado = flotanteIngresado;
+	}
+	else
+	{
+		printf("%s\n", mensajeError);
+	}
+	return resultado;
+}
+int SubMenu()
+{
+	int opcion;
+	printf("-----------------SubMenu-----------------\n");
+	printf("\n1-Precio de Aerolineas Argentinas: \n");
+	printf("2-Precio de Latam: \n");
+	printf("-----------------------------------------\n");
+	printf("\nIngrese una opcion: \n");
+	scanf("(%d", &opcion);
 
-	return *flotanteIngresado;
+	while(opcion < 1 || opcion > 2)
+	{
+		printf("La opcion ingresada es invalida\n Por favor reingrese la opcion");
+		scanf("(%d", &opcion);
+	}
+	return opcion;
 }
 float DescuentoDebito(float precioIngresado, int descuento)
 {
