@@ -44,6 +44,7 @@ int main()
 	float precioAerolineas = 0;
 	float precioLatam = 0;
 	int opcion;
+	int opcionSubMenu;
 
 	float credito = 0;
 	float debito = 0;
@@ -70,20 +71,20 @@ int main()
 			break;
 
 			case 2:
-				switch (SubMenu())
-				{
-					case 1:
+				switch(SubMenu())
+					{
+					case 1: //pide el precio de el vuelo de Aerolineas
 						precioAerolineas = PedirFlotante();
 						printf("Precio de aerolineas ingresado con exito! :)");
 					break;
-					case 2:
+					case 2: //pide el precio de el vuelo de Latam
 						precioLatam = PedirFlotante();
 						printf("Precio de Latam ingresado con exito! :)");
 					break;
-				}
+					}
 			break;
 			case 3:
-				if(precioAerolineas > 0 && precioLatam > 0)
+				if(precioAerolineas > 0 && precioLatam > 0 && kmIngresados > 1)
 				{
 					debito = DescuentoDebito(precioAerolineas, 10);
 					credito = InteresCredito(precioAerolineas, 25);
@@ -94,7 +95,7 @@ int main()
 				}
 				else
 				{
-					printf("Error!! El calculo no pudo hacer por falta de datos :(\nPor favor reingrese los precios, gracias :) \n");
+					printf("Error!! El calculo no pudo hacer por falta de datos :(\nPor favor ingrese los datos necesarios (km, precio vuelos), gracias :) \n");
 				}
 			break;
 			case 4:

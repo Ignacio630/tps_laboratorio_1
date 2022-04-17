@@ -32,7 +32,7 @@ int ValidarEntero(int enteroIngresado, int minimo, char* mensajeError)
 float PedirFlotante()
 {
 	float flotanteIngresado;
-	printf("Ingrese precio del vuelo: \n");
+	printf("Por favor ingrese el precio del vuelo: \n");
 	scanf("%f", &flotanteIngresado);
 	flotanteIngresado = ValidarEntero(flotanteIngresado, 1, "Error el precio ingresado es menor a 0.\n Reingrese otra vez los precios :)\n");
 	return flotanteIngresado;
@@ -52,20 +52,22 @@ float ValidarFlotante(float flotanteIngresado, int minimo, char* mensajeError)
 }
 int SubMenu()
 {
-	int opcion;
-	printf("-----------------SubMenu-----------------\n");
-	printf("\n1-Precio de Aerolineas Argentinas: \n");
-	printf("2-Precio de Latam: \n");
-	printf("-----------------------------------------\n");
-	printf("\nIngrese una opcion: \n");
-	scanf("(%d", &opcion);
+	int opcionSubMenu;
 
-	while(opcion < 1 || opcion > 2)
+	printf("SubMenu\n");
+	printf("\n1- Precio de Aerolineas Argentinas: \n");
+	printf("\n2- Precio de la aerolinea Latam:\n");
+
+	printf("Ingrese una opción Por favor:");
+	scanf("%d", &opcionSubMenu);
+
+	while(opcionSubMenu < 1 || opcionSubMenu > 2)
 	{
 		printf("La opcion ingresada es invalida\n Por favor reingrese la opcion");
-		scanf("(%d", &opcion);
+		scanf("%d", &opcionSubMenu);
 	}
-	return opcion;
+
+	return opcionSubMenu;
 }
 float DescuentoDebito(float precioIngresado, int descuento)
 {
@@ -134,7 +136,8 @@ void MostrarCargaForzada(int kmIngresados, float precioAerolineas, float precioL
 	printf("\nB) Precio con tarjeta de credito: $ %.2f", InteresCredito(precioAerolineas, 25));
 	printf("\nC) Precio pagando con bitcoin: $ %f BTC", CalcularBTC(precioAerolineas, BTC));
 	printf("\nD) Mostrar precio unitario: $ %.2f\n", CalcularPrecioUnitario(precioAerolineas, kmIngresados, "Error no se puede dividir por 0"));
-    /////////////////////////////////////////////////////////////////
+
+
 	printf("\nPrecio Latam: $%.2f\n", precioLatam);
 	printf("A) Precio con tarjeta de debito: $ %.2f", DescuentoDebito(precioLatam, 10));
 	printf("\nB) Precio con tarjeta de credito: $ %.2f", InteresCredito(precioLatam, 25));
