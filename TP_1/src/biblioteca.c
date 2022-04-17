@@ -8,9 +8,8 @@
 #include "biblioteca.h"
 
 
-int PedirEntero()
+int PedirEntero(int enteroIngresado)
 {
-	int enteroIngresado;
 	printf("Ingrese los km del viaje: \n");
 	scanf("%d", &enteroIngresado);
 	enteroIngresado = ValidarEntero(enteroIngresado, 1, "Error, los km ingresados tienen que ser mayor a 0");

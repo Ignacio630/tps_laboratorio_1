@@ -11,10 +11,10 @@
 #include <stdlib.h>
 #define BTC 4606954.55
 
-/// @fn int PedirEntero()
+/// @fn int PedirEntero(int )
 /// @brief Esta funcion permite pedirle un entero al usuario
 /// @return enteroIngresado
-int PedirEntero();
+int PedirEntero(int);
 /// @fn int ValidarEntero(int enteroIngresado, int minimo, char* mensajeError)
 /// @brief Esta funcion permite validar los enteros que se ingresaron con la funcion PedirEntero
 /// @param enteroIngresado = es el entero ingresado por el usuario

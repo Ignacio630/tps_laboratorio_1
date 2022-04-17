@@ -66,7 +66,12 @@ int main()
 		switch(opcion)
 		{
 			case 1:
-				kmIngresados = PedirEntero();
+				kmIngresados = PedirEntero(kmIngresados);
+				if(kmIngresados > 0)
+				{
+					printf("Por favor ingrese un numero mayor a 0 : ");
+					scanf("%d", &kmIngresados);
+				}
 			break;
 
 			case 2:
