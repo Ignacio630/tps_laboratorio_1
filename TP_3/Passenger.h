@@ -1,13 +1,11 @@
-/*
- * Passenger.h
- *
- *  Created on: 19 may. 2022
- *
- */
-
 #ifndef PASSENGER_H_
 #define PASSENGER_H_
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <string.h>
+#include <math.h>
+#include <ctype.h>
 typedef struct
 {
 	int id;
@@ -22,7 +20,7 @@ typedef struct
 
 Passenger* Passenger_new();
 Passenger* Passenger_newParametros(char* idStr,char* nombreStr,char* tipoPasajeroStr);
-void Passenger_delete();
+void Passenger_delete(Passenger* this);
 
 int Passenger_setId(Passenger* this,int id);
 int Passenger_getId(Passenger* this,int* id);

@@ -12,8 +12,14 @@
  */
 int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger)
 {
+	int retorno = -1;
 
-    return 1;
+	if(fopen("data.csv",)==NULL )
+	{
+
+	}
+
+    return retorno;
 }
 
 /** \brief Parsea los datos los datos de los pasajeros desde el archivo data.csv (modo binario).
