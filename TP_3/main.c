@@ -27,58 +27,77 @@ int main()
 
     LinkedList* listaPasajeros = ll_newLinkedList();
 
+	printf("/*****************************************************");
     do{
     	option = PedirOpciones("1-Cargar datos de pasajeros (Texto)\n2-Cargar datos de pasajeros (Binario)\n3-Alta pasajero\n4-Modificar pasajero\n5-Baja pasajero\n6-Listar pasajero\n7-Ordenar pasajero\n8-Guardar pasajeros (Texto)\n9-Guardar pasajeros (Binario)\n10-Salir\nElige la opcion:", "Ups!! Opcion invalida\n");
 
     	switch(option)
         {
             case 1:
-                controller_loadFromText("data.csv",listaPasajeros);
+            	//Cargar los datos de los pasajeros en el archivo como texto
+            	if(controller_loadFromText("data.csv",listaPasajeros) == 0)
+            	{
+            		puts("Se cargo el archivo con exito !!!");
+            	}
+            	else
+            	{
+            		puts("Ups! Hubo un error en la carga! :(");
+            	}
                 system("cls");
                 break;
 			case 2:
-				controller_loadFromText("data.csv",listaPasajeros);
+				//Cargar los datos de los pasajeros en el archivo como binario
+				controller_loadFromBinary("data.csv",listaPasajeros);
 				system("cls");
 				break;
 			case 3:
-				controller_loadFromText("data.csv",listaPasajeros);
+				//Alta pasajero
+				controller_addPassenger(listaPasajeros);
 				system("cls");
 				break;
 			case 4:
-				controller_loadFromText("data.csv",listaPasajeros);
+				//Modificar pasajero
+				controller_editPassenger(listaPasajeros);
 				system("cls");
 				break;
 			case 5:
-				controller_loadFromText("data.csv",listaPasajeros);
+				//Baja pasajero
+				controller_removePassenger(listaPasajeros);
 				system("cls");
 				break;
 			case 6:
-				controller_loadFromText("data.csv",listaPasajeros);
+				//listar pasajeros
+				controller_ListPassenger(listaPasajeros);
 				system("cls");
 				break;
 			case 7:
-				controller_loadFromText("data.csv",listaPasajeros);
+				//Ordenar pasajeros
+				controller_sortPassenger(listaPasajeros);
 				system("cls");
 				break;
 			case 8:
-				controller_loadFromText("data.csv",listaPasajeros);
+				//Guardar los datos de los pasajeros en el archivo como texto
+				controller_saveAsText("data.csv",listaPasajeros);
 				system("cls");
 				break;
 			case 9:
-				controller_loadFromText("data.csv",listaPasajeros);
+				//Cargar los datos de los pasajeros en el archivo como binario
+				controller_saveAsBinary("data.csv",listaPasajeros);
 				system("cls");
 				break;
 			case 10:
-				controller_loadFromText("data.csv",listaPasajeros);
+				//Salir
+				puts("Gracias por usar mi app!! :)");
 				system("cls");
 				break;
-
             default:
+            	//Ingreso erroneo de opciones
             	system("cls");
             	printf("Ups!! Opcion invalida\n");
             	break;
         }
     }while(option != 10);
+
     return 0;
 }
 

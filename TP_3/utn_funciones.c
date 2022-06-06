@@ -273,12 +273,11 @@ int ValidarEntero(int* entero)
 {
 	int retorno = -1;
 	int i;
-	int len;
-	len=strlen(entero);
-	if(entero != NULL && len > 0)
+
+	if(entero != NULL && sizeof(entero) > 0)
 	{
 		retorno = 1;
-		for(i=0;i<len && entero[i] != '\0' ;i++)
+		for(i=0;i<sizeof(entero) && entero[i] != '\0' ;i++)
 		{
 			if(i==0 && (entero[i] == '+' || entero[i == '-']))
 			{

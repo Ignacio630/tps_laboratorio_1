@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "LinkedList.h"
 #include "Passenger.h"
-
+#include "parser.h"
 
 /** \brief Carga los datos de los pasajeros desde el archivo data.csv (modo texto).
  *
@@ -13,7 +13,18 @@
  */
 int controller_loadFromText(char* path , LinkedList* pArrayListPassenger)
 {
-    return 1;
+	int retorno;
+	FILE* pFile;
+
+	retorno = -1;
+	pFile = fopen(path,"r");
+	if(pFile != NULL)
+	{
+		parser_PassengerFromText(pFile, pArrayListPassenger);
+		retorno = 0;
+	}
+	fclose(pFile);
+    return retorno;
 }
 
 /** \brief Carga los datos de los pasajeros desde el archivo data.csv (modo binario).
@@ -73,7 +84,24 @@ int controller_removePassenger(LinkedList* pArrayListPassenger)
  */
 int controller_ListPassenger(LinkedList* pArrayListPassenger)
 {
-    return 1;
+	int retorno;
+	int len;
+	int i;
+	Passenger* this;
+
+	retorno = -1;
+	len = ll_len(pArrayListPassenger);
+
+	if(this != NULL && len > 0)
+	{
+		for(i=0;i<len;i++)
+		{
+			this = (Passenger*)ll_get(pArrayListPassenger, i);
+			Passenger_printOne(this);
+		}
+		retorno = 0;
+	}
+    return retorno;
 }
 
 /** \brief Ordenar pasajeros
