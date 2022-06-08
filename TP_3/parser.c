@@ -13,26 +13,26 @@
 int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger)
 {
 	int retorno = -1;
-	char bufferId[100];
-	char bufferNombre[50];
-	char bufferApellido[50];
-	char bufferPrecio[1000];
-	char bufferTipoPasajero[10];
-	char bufferCodigoVuelo[20];
-	char bufferEstadoVuelo[10];
-	char falsaLectura[1000];
+	char bufferId[1000];
+	char bufferNombre[500];
+	char bufferApellido[500];
+	char bufferPrecio[10000];
+	char bufferTipoPasajero[200];
+	char bufferCodigoVuelo[200];
+	char bufferEstadoVuelo[200];
 	Passenger* pasajero;
 
-	fscanf(pFile,"%s",falsaLectura);
 	if(pFile != NULL && pArrayListPassenger != NULL)
 	{
+		fscanf(pFile,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n",bufferId, bufferNombre, bufferApellido, bufferPrecio,bufferCodigoVuelo, bufferTipoPasajero, bufferEstadoVuelo);
 		while(!feof(pFile))
 		{
 			fscanf(pFile,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n",bufferId, bufferNombre, bufferApellido, bufferPrecio,bufferCodigoVuelo, bufferTipoPasajero, bufferEstadoVuelo);
 			pasajero = Passenger_newParametros(bufferId, bufferNombre, bufferApellido, bufferPrecio,bufferCodigoVuelo, bufferTipoPasajero, bufferEstadoVuelo);
-			ll_add(pArrayListPassenger, pasajero);
-			break;
-
+			if(pasajero != NULL)
+			{
+				ll_add(pArrayListPassenger, pasajero);
+			}
 		}
 		retorno = 0;
 	}

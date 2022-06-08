@@ -293,4 +293,3 @@ int ValidarEntero(int* entero)
 
 	return retorno;
 }
-
