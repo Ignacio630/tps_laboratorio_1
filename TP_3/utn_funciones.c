@@ -144,7 +144,7 @@ float utn_GetFlotante(float* pResultado, char* mensaje, char* MensajeError, int 
 
 	return retorno;
 }
-void PedirCadena(char cadena[],char mensaje[])
+void PedirCadena(char* cadena, char* mensaje)
 {
 	printf(mensaje);
 	fflush(stdin);
@@ -156,6 +156,22 @@ void PedirCadena(char cadena[],char mensaje[])
 		fflush(stdin);
 		scanf("%s",cadena);
 	}
+}
+int  PedirCadenaConNumero(char* cadena,char* mensaje)
+{
+	int retorno;
+	retorno = -1;
+	printf(mensaje);
+	fflush(stdin);
+	scanf("%s",cadena);
+	while(!ValidarCadena(cadena) && !esNumerica(cadena))
+	{
+		printf("Ups! a ocurrido un error!\n");
+		printf(mensaje);
+		fflush(stdin);
+		scanf("%s",cadena);
+	}
+	return retorno;
 }
 int PedirEntero(char* numero, char* mensaje, char* mensajeError)
 {
@@ -186,7 +202,7 @@ int PedirOpciones(char mensaje[], char mensajeError[])
 	retorno=atoi(opciones);
 	return retorno;
 }
-int PedirFlotante(char numero[], char mensaje[], char mensajeError[])
+float PedirFlotante(char numero[], char mensaje[], char mensajeError[])
 {
 	int retorno;
 	printf(mensaje);
@@ -290,6 +306,6 @@ int ValidarEntero(int* entero)
 			}
 		}
 	}
-
 	return retorno;
 }
+

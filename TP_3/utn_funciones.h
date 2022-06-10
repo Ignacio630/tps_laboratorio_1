@@ -11,11 +11,13 @@ int myGets(char* , int );
 
 int PedirEntero(char* ,char* ,char*);
 
-int PedirOpciones(char[] ,char[]);
+int PedirOpciones(char* ,char*);
 
-int PedirFlotante(char [], char [], char []);
+float PedirFlotante(char *, char *, char *);
 
-void PedirCadena(char [],char []);
+void PedirCadena(char *,char *);
+
+int PedirCadenaConNumero(char *,char *);
 
 int SumarArrays();
 
@@ -25,9 +27,7 @@ int utn_GetEntero(int* ,char* ,char* ,int ,int ,int );
 
 float utn_GetFlotante(float* ,char* ,char* ,int ,int ,int );
 
-char utn_GetString(char* , char* , char* , int );
-
-int ValidarCadena(char []);
+int ValidarCadena(char *);
 
 int ValidarParidad(int);
 

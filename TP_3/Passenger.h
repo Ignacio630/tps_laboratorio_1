@@ -46,7 +46,11 @@ int Passenger_setPrecio(Passenger* ,float);
 int Passenger_getPrecio(Passenger* ,float*);
 
 void Passenger_printOne(Passenger* );
+
 int Passenger_CompareByName(void*, void*);
 int Passenger_CompareById(void*, void*);
 int Passenger_CompareByFlightStatus(void*, void*);
+
+void TipoPasajeroMenu(char*);
+void EstadoVueloMenu(char*);
 #endif /* PASSENGER_H_ */

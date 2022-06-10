@@ -49,14 +49,35 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListPassenger)
  */
 int controller_addPassenger(LinkedList* pArrayListPassenger)
 {
-//	int retorno;
-//	Passenger* unPasajero;
-//	int id;
-//	char
-//	retorno = -1;
-    return 1;
-}
+	int retorno;
+	Passenger* unPasajero;
+	char id;
+	char nombre[200];
+	char apellido[200];
+	char precio;
+	char codigoVuelo[50];
+	char tipoDePasajero[50];
+	char estadoVuelo[50];
+	retorno = -1;
 
+	if(pArrayListPassenger != NULL)
+	{
+		PedirEntero(&id, "Ingrese el id del pasajero:","Error, lo que se ingreso no es un entero.\n");
+		PedirCadena(nombre, "Ingrese el nombre del pasajero:");
+		PedirCadena(apellido, "Ingrese el apellido del pasajero:");
+		PedirFlotante(&precio, "Ingrese el precio del pasaje:","Error, lo que se ingreso no es un flotante.\n");
+		TipoPasajeroMenu(tipoDePasajero);
+		PedirCadena(codigoVuelo, "Ingrese el codigo de vuelo del pasajero: ");
+		EstadoVueloMenu(estadoVuelo);
+	}
+	unPasajero = Passenger_newParametros(&id, nombre, apellido, &precio, codigoVuelo, tipoDePasajero, estadoVuelo);
+	if(unPasajero != NULL)
+	{
+		ll_add(pArrayListPassenger, unPasajero);
+		retorno = 0;
+	}
+    return retorno;
+}
 /** \brief Modificar datos de pasajero
  *
  * \param path char*
@@ -127,7 +148,7 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger)
 	{
 		do
 		{
-			option = PedirOpciones("1-Ordenar por nombre por orden alfabeticamente creciente\n2-Ordenar por nombre de alfabeticamente decreciente\n3-Ordenar por ID de menor a mayor\n4-Ordenar por ID de mayor a menor\n5-Ordenar por estado de vuelo alfabeticamente decreciente\n6-Ordenar por estado de vuelo de alfabeticamente creciente\n7-Salir\nElija una opcion:","Ups! Opcion Invalida!!\n");
+			option = PedirOpciones("|~~~~~~~~~~~~~~~~~~~~MENU~DE~ORDENAMIENTO~~~~~~~~~~~~~~~~~~~~|\n|1-Ordenar por nombre por orden alfabeticamente creciente    |\n|2-Ordenar por nombre por orden alfabeticamente decreciente  |\n|3-Ordenar por ID de menor a mayor\t\t\t     |\n|4-Ordenar por ID de mayor a menor\t\t\t     |\n|5-Ordenar por estado de vuelo alfabeticamente decreciente   |\n|6-Ordenar por estado de vuelo de alfabeticamente creciente  |\n|7-Salir\t\t\t\t\t\t     |\n|____________________________________________________________|\n|->Elige la opcion: ","Ups! Opcion Invalida!!\n");
 			switch(option)
 			{
 				case 1:

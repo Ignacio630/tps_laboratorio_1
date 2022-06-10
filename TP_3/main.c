@@ -23,14 +23,13 @@
 int main()
 {
 	setbuf(stdout, NULL);
+	int flagOpen = 0;
     int option = 0;
 
     LinkedList* listaPasajeros = ll_newLinkedList();
 
-	printf("/*******************************************\n");
-	printf("/*******************************************\n");
     do{
-    	option = PedirOpciones("1-Cargar datos de pasajeros (Texto)\n2-Cargar datos de pasajeros (Binario)\n3-Alta pasajero\n4-Modificar pasajero\n5-Baja pasajero\n6-Listar pasajero\n7-Ordenar pasajero\n8-Guardar pasajeros (Texto)\n9-Guardar pasajeros (Binario)\n10-Salir\nElige la opcion:", "Ups!! Opcion invalida\n");
+    	option = PedirOpciones("|~~~~~~~~~~~~~MENU~PRINCIPAL~~~~~~~~~~~~~~|\n|1-Cargar datos de pasajeros (Texto)\t  |\n|2-Cargar datos de pasajeros (Binario)\t  |\n|3-Alta pasajero\t\t\t  |\n|4-Modificar pasajero\t\t\t  |\n|5-Baja pasajero\t\t\t  |\n|6-Listar pasajero\t\t\t  |\n|7-Ordenar pasajero\t\t\t  |\n|8-Guardar pasajeros (Texto)\t\t  |\n|9-Guardar pasajeros (Binario)\t\t  |\n|10-Salir\t\t\t\t  |\n|_________________________________________|\n|->Elige la opcion: ", "Ups!! Opcion invalida\n");
     	switch(option)
         {
             case 1:
@@ -38,6 +37,7 @@ int main()
             	if(!controller_loadFromText("data.csv",listaPasajeros))
             	{
             		puts("Se cargo el archivo con exito !!!");
+            		flagOpen = 1;
             	}
             	else
             	{
@@ -50,7 +50,10 @@ int main()
 				break;
 			case 3:
 				//Alta pasajero
-				controller_addPassenger(listaPasajeros);
+				if(!controller_addPassenger(listaPasajeros))
+				{
+					flagOpen = 1;
+				}
 				break;
 			case 4:
 				//Modificar pasajero
@@ -62,7 +65,14 @@ int main()
 				break;
 			case 6:
 				//listar pasajeros
-				controller_ListPassenger(listaPasajeros);
+				if(flagOpen == 1)
+				{
+					controller_ListPassenger(listaPasajeros);
+				}
+				else
+				{
+					puts("No se cargo o no se dio de alta ningun pasajero!!");
+				}
 				break;
 			case 7:
 				//Ordenar pasajeros

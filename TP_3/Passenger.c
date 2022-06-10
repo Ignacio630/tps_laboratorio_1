@@ -36,29 +36,8 @@ Passenger* Passenger_newParametros(char* idStr,char* nombreStr, char* apellidoSt
 int ValidarSetters(Passenger* pasajero,char* idStr,char* nombreStr, char* apellidoStr, char* precioStr, char* codigoVueloStr, char* tipoPasajeroStr, char* estadoVueloStr)
 {
 	int retorno;
-//	int tipoPasajero;
-
 	retorno = 0;
 
-//
-//	if(strcmp(tipoPasajeroStr,"FirstClass") == 0)
-//	{
-//		tipoPasajero = FIRSTCLASS;
-//	}
-//	else
-//	{
-//		if(strcmp(tipoPasajeroStr,"ExecutiveClass") == 0)
-//		{
-//			tipoPasajero = EXECUTIVECLASS;
-//		}
-//		else
-//		{
-//			if(strcmp(tipoPasajeroStr, "EconomyClass") == 0)
-//			{
-//				tipoPasajero = ECONOMYCLASS;
-//			}
-//		}
-//	}
 	if(Passenger_setId(pasajero, atoi(idStr)) == -1 ||
 	   Passenger_setNombre(pasajero, nombreStr) == -1 ||
 	   Passenger_setApellido(pasajero, apellidoStr) == -1 ||
@@ -71,7 +50,6 @@ int ValidarSetters(Passenger* pasajero,char* idStr,char* nombreStr, char* apelli
 		pasajero = NULL;
 		retorno = -1;
 	}
-
 	return retorno;
 }
 
@@ -305,14 +283,53 @@ int Passenger_CompareByFlightStatus(void* p1, void* p2)
 	return strcmp(EstadoVueloP1,EstadoVueloP2);
 }
 
-
-
-
-
-
-
-
-
+void TipoPasajeroMenu(char* tipoDePasajero)
+{
+	int opciones;
+	do
+	{
+		opciones = PedirOpciones("|Ingrese-tipo-de-pasajero|\n|1-EconomyClass\t\t |\n|2-FirstClass\t\t |\n|3-ExecutiveClass\t |\n|->Ingrese opcion:", "Ups! Opcion invalida\n");
+		switch (opciones) {
+			case 1:
+				strcpy(tipoDePasajero,"EconomyClass");
+				break;
+			case 2:
+				strcpy(tipoDePasajero,"FirstClass");
+				break;
+			case 3:
+				strcpy(tipoDePasajero,"ExecutiveClass");
+				break;
+			default:
+				puts("Ups! Opcion invalida\n");
+				break;
+		}
+	}while(opciones != 1 && opciones != 2 && opciones != 3);
+}
+void EstadoVueloMenu(char* estadoVuelo)
+{
+	int opciones;
+	do
+	{
+		opciones = PedirOpciones("|Ingrese-el-estado-de-Vuelo|\n|1-Aterrizado\t\t   |\n|2-Demorado\t\t   |\n|3-En Vuelo\t\t   |\n|4-En Horario\t\t   |\n|->Ingrese Una Opcion: ", "Ups! Opcion invalida\n");
+		switch (opciones) {
+			case 1:
+				strcpy(estadoVuelo,"Aterrizado");
+				break;
+			case 2:
+				strcpy(estadoVuelo,"Demorado");
+				break;
+			case 3:
+				strcpy(estadoVuelo,"En Vuelo");
+				break;
+			case 4:
+				strcpy(estadoVuelo,"En Horario");
+				break;
+			default:
+				puts("Ups! Opcion invalida\n");
+				break;
+		}
+	}while(opciones != 1 && opciones != 2 && opciones != 3 && opciones != 4);
+}
 
 
 
