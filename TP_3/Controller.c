@@ -50,9 +50,10 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListPassenger)
 		fclose(pFile);
 	    return retorno;
 }
-
-
-
+/// @brief Carga el ID maximo guardado hasta el momento
+///
+/// @param path char*
+/// @return	int
 int controller_loadMaxId(char* path)
 {
 	int retorno;
@@ -68,6 +69,11 @@ int controller_loadMaxId(char* path)
 	fclose(pFile);
 	return retorno;
 }
+/// @brief Guarda el ID maximo hasta el momento
+///
+/// @param path char*
+/// @param id int
+/// @return int
 int controller_saveMaxId(char* path, int id)
 {
 	FILE* pFIle;
@@ -324,9 +330,42 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger)
  */
 int controller_saveAsText(char* path , LinkedList* pArrayListPassenger)
 {
+	FILE* pfile;
+	Passenger* this;
+	int len;
 	int retorno;
+	int bufferId;
+	char bufferNombre[500];
+	char bufferApellido[500];
+	float bufferPrecio;
+	char bufferTipoPasajero[200];
+	char bufferCodigoVuelo[200];
+	char bufferEstadoVuelo[200];
+
 	retorno = -1;
-    return retorno;
+	pfile = fopen(path,"w");
+	if(pfile != NULL && pArrayListPassenger != NULL)
+	{
+			len = ll_len(pArrayListPassenger);
+			for(int i = 0; i < len;i++)
+			{
+				this = ll_get(pArrayListPassenger, i);
+				if(!Passenger_getId(this, &bufferId) ||
+				   !Passenger_getNombre(this, bufferNombre) ||
+				   !Passenger_getApellido(this, bufferApellido) ||
+				   !Passenger_getPrecio(this, &bufferPrecio) ||
+				   !Passenger_getCodigoVuelo(this, bufferCodigoVuelo) ||
+				   !Passenger_getTipoPasajero(this, bufferTipoPasajero) ||
+				   !Passenger_getEstadoVuelo(this, bufferEstadoVuelo))
+				{
+				fprintf(pfile,"%d,%s,%s,%f,%s,%s,%s\n",bufferId,bufferNombre,bufferApellido, bufferPrecio, bufferTipoPasajero,bufferCodigoVuelo, bufferEstadoVuelo);
+				retorno = 0;
+				}
+
+			}
+	}
+	fclose(pfile);
+	return retorno;
 }
 
 /** \brief Guarda los datos de los pasajeros en el archivo data.csv (modo binario).

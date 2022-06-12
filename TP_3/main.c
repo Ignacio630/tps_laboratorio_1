@@ -116,7 +116,7 @@ int main()
 				//Guardar los datos de los pasajeros en el archivo como texto
 				if(flagOpen == 1)
 				{
-					controller_saveAsText("data.csv",listaPasajeros);
+					controller_saveAsText("data2.csv",listaPasajeros);
 					puts("Datos con formato de texto guardados con exito!!");
 				}
 				else
