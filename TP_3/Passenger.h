@@ -6,7 +6,7 @@
 #include <string.h>
 #include <math.h>
 #include <ctype.h>
-
+#include "LinkedList.h"
 typedef struct
 {
 	int id;
@@ -16,7 +16,6 @@ typedef struct
 	char codigoVuelo[200];
 	char tipoPasajero[200];
 	char estadoVuelo[200];
-
 }Passenger;
 
 Passenger* Passenger_new();
@@ -50,7 +49,9 @@ void Passenger_printOne(Passenger* );
 int Passenger_CompareByName(void*, void*);
 int Passenger_CompareById(void*, void*);
 int Passenger_CompareByFlightStatus(void*, void*);
+int findPassengerById(LinkedList*,int);
 
+//Menu
 void TipoPasajeroMenu(char*);
 void EstadoVueloMenu(char*);
 #endif /* PASSENGER_H_ */

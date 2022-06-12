@@ -1,11 +1,13 @@
 #include "utn_funciones.h"
 
-
+//static declaration
 static int GetInt(int*);
 static int GetFloat(float* );
 static int esNumerica(char*);
 static int esFlotante(char*);
+static int esNumericaAndCadena(char* );
 
+//Declarated funcions
 static int esNumerica(char* cadena)
 {
 	int retorno = -1;
@@ -55,19 +57,54 @@ static int esFlotante(char* numero)
 		retorno = 1;
 		for(i=0;i<len && numero[i] != '\0' ;i++)
 		{
-			if(i !=0 && (numero[i] == '+' || numero[i] == '-') && numero[i] == '.' && punto == 0)
+			if(i !=0 && (numero[i] == '+' || numero[i] == '-') )
 			{
 				punto = 1;
 				continue;
 			}
 			if(numero[i] > '9' || numero[i]  < '0')
 			{
+				if(numero[i] == '.' && punto == 0)
+				{
+					punto = 1;
+					continue;
+				}
 				retorno = 0;
 				break;
 			}
 		}
 	}
+	return retorno;
+}
+static int esNumericaAndCadena(char* numero){
+	int retorno = -1;
+	int len;
+	int flagChar;
+	int flagInt;
+	flagInt = 0;
+	flagInt = 0;
+	len=strlen(numero);
+	if(numero != NULL && len > 0)
+	{
+		retorno = 1;
+		for(int i=0;i<len && numero[i] != '\0' ;i++)
+		{
+			if(!isdigit(numero[i]))
+			{
+				flagInt = 1;
+			}
+			if(!isalpha(numero[i]))
+			{
+				flagChar = 1;
+			}
 
+			if(flagChar == 1 && flagInt == 0)
+			{
+				retorno = 0;
+				break;
+			}
+		}
+	}
 	return retorno;
 }
 static int GetFloat(float* pResultado)
@@ -103,6 +140,40 @@ int myGets(char* cadena, int len)
 		}
 	}
 
+	return retorno;
+}
+int ValidarCadena(char* cadena)
+{
+	int retorno=1;
+	int len;
+	if(cadena!=NULL)
+	{
+		len=strlen(cadena);
+		for(int i=0;i<len;i++)
+		{
+			if(!isalpha(cadena[i]))
+			{
+				retorno=0;
+			}
+		}
+	}
+	return retorno;
+}
+int ValidarCadenaConNumero(char* cadena)
+{
+	int retorno=1;
+	int len;
+	if(cadena!=NULL)
+	{
+		len=strlen(cadena);
+		for(int i=0;i<len;i++)
+		{
+			if(!esNumericaAndCadena(cadena))
+			{
+				retorno=0;
+			}
+		}
+	}
 	return retorno;
 }
 int utn_GetEntero(int* pResultado, char* mensaje, char* MensajeError, int minimo, int maximo, int reintentos)
@@ -157,21 +228,18 @@ void PedirCadena(char* cadena, char* mensaje)
 		scanf("%s",cadena);
 	}
 }
-int  PedirCadenaConNumero(char* cadena,char* mensaje)
+void PedirCadenaConNumero(char* cadena,char* mensaje)
 {
-	int retorno;
-	retorno = -1;
 	printf(mensaje);
 	fflush(stdin);
 	scanf("%s",cadena);
-	while(!ValidarCadena(cadena) && !esNumerica(cadena))
+	while(!ValidarCadenaConNumero(cadena))
 	{
 		printf("Ups! a ocurrido un error!\n");
 		printf(mensaje);
 		fflush(stdin);
 		scanf("%s",cadena);
 	}
-	return retorno;
 }
 int PedirEntero(char* numero, char* mensaje, char* mensajeError)
 {
@@ -187,7 +255,7 @@ int PedirEntero(char* numero, char* mensaje, char* mensajeError)
 	retorno=atoi(numero);
 	return retorno;
 }
-int PedirOpciones(char mensaje[], char mensajeError[])
+int PedirOpciones(char* mensaje, char* mensajeError)
 {
 	int retorno;
 	char opciones[1000];
@@ -202,12 +270,12 @@ int PedirOpciones(char mensaje[], char mensajeError[])
 	retorno=atoi(opciones);
 	return retorno;
 }
-float PedirFlotante(char numero[], char mensaje[], char mensajeError[])
+float PedirFlotante(char* numero, char* mensaje, char* mensajeError)
 {
 	int retorno;
 	printf(mensaje);
 	scanf("%s",numero);
-	while(esFlotante(numero))
+	while(!esFlotante(numero))
 	{
 		printf("%s",mensajeError);
 		printf("%s",mensaje);
@@ -219,23 +287,6 @@ float PedirFlotante(char numero[], char mensaje[], char mensajeError[])
 void MostrarCadena(char cadena[])
 {
 	printf("%s", cadena);
-}
-int ValidarCadena(char cadena[])
-{
-	int retorno=1;
-	int len;
-	if(cadena!=NULL)
-	{
-		len=strlen(cadena);
-		for(int i=0;i<len;i++)
-		{
-			if(!isalpha(cadena[i]))
-			{
-				retorno=0;
-			}
-		}
-	}
-	return retorno;
 }
 int ValidarFloatMinimo(float numero, int minimo, char mensaje[])
 {

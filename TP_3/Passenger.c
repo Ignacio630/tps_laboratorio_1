@@ -5,16 +5,7 @@
 #define FIRSTCLASS 0
 #define EXECUTIVECLASS 1
 #define ECONOMYCLASS 2
-/*
- *
-	int id;
-	char nombre[50];
-	char apellido[50];
-	float precio;
-	int tipoPasajero;
-	char codigoVuelo[4];
-	int isEmpty;
- * */
+//Passenger functions
 Passenger* Passenger_new()
 {
 	Passenger* auxPassenger;
@@ -60,6 +51,7 @@ void Passenger_delete(Passenger* this){
 	}
 }
 
+//ID
 int Passenger_setId(Passenger* this,int id)
 {
 	int retorno = -1;
@@ -81,6 +73,7 @@ int Passenger_getId(Passenger* this,int* id)
 	}
 	return retorno;
 }
+//Nombre
 int Passenger_setNombre(Passenger* this,char* nombre)
 {
 	int retorno = -1;
@@ -101,7 +94,7 @@ int Passenger_getNombre(Passenger* this,char* nombre)
 	}
 	return retorno;
 }
-
+//Apellido
 int Passenger_setApellido(Passenger* this,char* apellido)
 {
 	int retorno = -1;
@@ -122,6 +115,7 @@ int Passenger_getApellido(Passenger* this,char* apellido)
 	}
 	return retorno;
 }
+//Precio
 int Passenger_setPrecio(Passenger* this,float precio)
 {
 	int retorno = -1;
@@ -142,7 +136,7 @@ int Passenger_getPrecio(Passenger* this,float* precio)
 	}
 	return retorno;
 }
-
+//Codigo de vuelo
 int Passenger_setCodigoVuelo(Passenger* this,char* codigoVuelo)
 {
 	int retorno = -1;
@@ -163,7 +157,7 @@ int Passenger_getCodigoVuelo(Passenger* this,char* codigoVuelo)
 	}
 	return retorno;
 }
-
+//Tipo de pasajero
 int Passenger_setTipoPasajero(Passenger* this,char* tipoPasajero)
 {
 	int retorno = -1;
@@ -184,6 +178,7 @@ int Passenger_getTipoPasajero(Passenger* this,char* tipoPasajero)
 	}
 	return retorno;
 }
+//Estado Vuelo
 int Passenger_setEstadoVuelo(Passenger* this,char* estadoVuelo)
 {
 	int retorno = -1;
@@ -225,9 +220,10 @@ void Passenger_printOne(Passenger* pasajero)
 
 	if(pasajero != NULL)
 	{
-		printf("|%8d|%15s|%15s|%10.2f|%15s|%15s|%15s|\n", id, nombre, apellido, precio, codigoVuelo, tipoPasajero, estadoVuelo);
+		printf("|%6d|%15s|%15s|%10.2f|%8s|%15s|%13s|\n", id, nombre, apellido, precio, tipoPasajero, codigoVuelo, estadoVuelo);
 	}
 }
+
 int Passenger_CompareByName(void* p1, void* p2)
 {
 	Passenger* pasajero1;
@@ -305,6 +301,7 @@ void TipoPasajeroMenu(char* tipoDePasajero)
 		}
 	}while(opciones != 1 && opciones != 2 && opciones != 3);
 }
+
 void EstadoVueloMenu(char* estadoVuelo)
 {
 	int opciones;
@@ -330,7 +327,42 @@ void EstadoVueloMenu(char* estadoVuelo)
 		}
 	}while(opciones != 1 && opciones != 2 && opciones != 3 && opciones != 4);
 }
+int ValidarId(Passenger* this, char* id)
+{
+	int retorno;
+	retorno = -1;
 
+
+
+
+	return retorno;
+}
+
+int findPassengerById(LinkedList* pArrayListPassenger,int id)
+{
+	int retorno;
+	int i;
+	int len;
+	int auxId;
+
+	Passenger* pasajero;
+	retorno = -1;
+	len = ll_len(pArrayListPassenger);
+	if(pasajero !=NULL && len>0)
+	{
+		for(i=0;i<len;i++)
+		{
+			pasajero = ll_get(pArrayListPassenger, i);
+			Passenger_getId(pasajero, &auxId);
+			if(auxId == id)
+			{
+				retorno = i;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
 
 
 

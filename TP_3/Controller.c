@@ -37,7 +37,49 @@ int controller_loadFromText(char* path , LinkedList* pArrayListPassenger)
  */
 int controller_loadFromBinary(char* path , LinkedList* pArrayListPassenger)
 {
-    return 1;
+	int retorno;
+		FILE* pFile;
+
+		retorno = -1;
+		pFile = fopen(path,"rb");
+		if(pFile != NULL && pArrayListPassenger != NULL)
+		{
+			parser_PassengerFromBinary(pFile, pArrayListPassenger);
+			retorno = 0;
+		}
+		fclose(pFile);
+	    return retorno;
+}
+
+
+
+int controller_loadMaxId(char* path)
+{
+	int retorno;
+	FILE* pFile;
+	char bufferId[100];
+	pFile = fopen(path, "r");
+
+	if(pFile != NULL)
+	{
+		fscanf(pFile,"%[^\n]", bufferId);
+		retorno = atoi(bufferId);
+	}
+	fclose(pFile);
+	return retorno;
+}
+int controller_saveMaxId(char* path, int id)
+{
+	FILE* pFIle;
+	int retorno;
+	pFIle= fopen(path, "w");
+	if(pFIle != NULL)
+	{
+		fprintf(pFIle, "%d", id);
+		retorno = 0;
+	}
+	fclose(pFIle);
+	return retorno;
 }
 
 /** \brief Alta de pasajero
@@ -51,10 +93,11 @@ int controller_addPassenger(LinkedList* pArrayListPassenger)
 {
 	int retorno;
 	Passenger* unPasajero;
-	char id;
+	char id[100];
+	int auxId;
 	char nombre[200];
 	char apellido[200];
-	char precio;
+	char precio[1000];
 	char codigoVuelo[50];
 	char tipoDePasajero[50];
 	char estadoVuelo[50];
@@ -62,22 +105,26 @@ int controller_addPassenger(LinkedList* pArrayListPassenger)
 
 	if(pArrayListPassenger != NULL)
 	{
-		PedirEntero(&id, "Ingrese el id del pasajero:","Error, lo que se ingreso no es un entero.\n");
+		auxId = controller_loadMaxId("maxid.csv");
+		auxId++;
+		itoa(auxId,id,10);
 		PedirCadena(nombre, "Ingrese el nombre del pasajero:");
 		PedirCadena(apellido, "Ingrese el apellido del pasajero:");
-		PedirFlotante(&precio, "Ingrese el precio del pasaje:","Error, lo que se ingreso no es un flotante.\n");
+		PedirFlotante(precio, "Ingrese el precio del pasaje:","Error, lo que se ingreso no es un flotante.\n");
 		TipoPasajeroMenu(tipoDePasajero);
-		PedirCadena(codigoVuelo, "Ingrese el codigo de vuelo del pasajero: ");
+		PedirCadenaConNumero(codigoVuelo, "Ingrese el codigo de vuelo del pasajero: ");
 		EstadoVueloMenu(estadoVuelo);
 	}
-	unPasajero = Passenger_newParametros(&id, nombre, apellido, &precio, codigoVuelo, tipoDePasajero, estadoVuelo);
+	unPasajero = Passenger_newParametros(id, nombre, apellido, precio, codigoVuelo, tipoDePasajero, estadoVuelo);
 	if(unPasajero != NULL)
 	{
 		ll_add(pArrayListPassenger, unPasajero);
+		controller_saveMaxId("maxid.csv",auxId);
 		retorno = 0;
 	}
     return retorno;
 }
+
 /** \brief Modificar datos de pasajero
  *
  * \param path char*
@@ -87,7 +134,74 @@ int controller_addPassenger(LinkedList* pArrayListPassenger)
  */
 int controller_editPassenger(LinkedList* pArrayListPassenger)
 {
-    return 1;
+	int retorno;
+	int opciones;
+	Passenger* pasajero;
+	int id;
+	char nombre[50];
+	char apellido[50];
+	char precio[1000];
+	char tipoPasajero[20];
+	char codigoVuelo[20];
+	char estadoVuelo[20];
+	int indice;
+	retorno = -1;
+
+	utn_GetEntero(&id, "|->Ingrese el ID del pasajero a modificar:", "\nError! El ID ingresado es invalido o no existe aun en el programa\n",0,100000,99);
+	indice = findPassengerById(pArrayListPassenger, id);
+	if(indice != -1)
+	{
+		pasajero = ll_get(pArrayListPassenger, indice);
+		if(pArrayListPassenger != NULL)
+		{
+			do
+			{
+				opciones = PedirOpciones("|-----MENU-DE-MODIFICACIONES-----|\n|1-Modifcar nombre\t\t |\n|2-Modificar apellido\t\t |\n|3-Modificar precio\t\t |\n|4-Modificar codigo de vuelo\t |\n|5-Modificar tipo de pasajero    |\n|6-Modificar estado de vuelo\t |\n|7-Salir\t\t\t |\n|->Ingrese una opcion:", "Ups! Opcion invalida!!");
+				switch (opciones)
+				{
+					case 1:
+						PedirCadena(nombre, "Ingrese el nombre modificado del pasajero:");
+						Passenger_setNombre(pasajero, nombre);
+						break;
+					case 2:
+						PedirCadena(apellido, "Ingrese el apellido modificado del pasajero:");
+						Passenger_setApellido(pasajero, apellido);
+						break;
+					case 3:
+						PedirFlotante(precio, "Ingrese el precio modificado del pasaje:","Error, lo que se ingreso no es un flotante.\n");
+						Passenger_setPrecio(pasajero, atof(precio));
+						break;
+					case 4:
+						puts("|----------Menu-Modificaion----------|");
+						TipoPasajeroMenu(tipoPasajero);
+						Passenger_setTipoPasajero(pasajero, tipoPasajero);
+						break;
+					case 5:
+						PedirCadenaConNumero(codigoVuelo, "Ingrese el codigo de vuelo modificado del pasajero: ");
+						Passenger_setCodigoVuelo(pasajero, codigoVuelo);
+						break;
+					case 6:
+						puts("|----------Menu-Modificaion----------|");
+						EstadoVueloMenu(estadoVuelo);
+						Passenger_setEstadoVuelo(pasajero, estadoVuelo);
+						break;
+					case 7:
+						retorno = 0;
+						puts("Saliendo..");
+						break;
+					default:
+						puts("Ups! Opcion invalida!!");
+						break;
+				}
+			}while(opciones != 7);
+		}
+		else
+		{
+			puts("No se encotro el ID del pasajero!\n");
+		}
+
+	}
+    return retorno;
 }
 
 /** \brief Baja de pasajero
@@ -99,7 +213,25 @@ int controller_editPassenger(LinkedList* pArrayListPassenger)
  */
 int controller_removePassenger(LinkedList* pArrayListPassenger)
 {
-    return 1;
+	int id;
+	int index;
+	int retorno;
+
+
+	utn_GetEntero(&id,"|->Ingrese el ID del pasajero que quiere remover de la lista", "Error", 0, 10000, 99);
+    index= findPassengerById(pArrayListPassenger, id);
+    if(index != -1)
+    {
+    	ll_remove(pArrayListPassenger, index);
+    	retorno = 0;
+    }
+    else
+    {
+    	puts("No se pudo encontrar el ID del pasajero que quiere remover\n");
+    	retorno = -1;
+    }
+
+	return retorno;
 }
 
 /** \brief Listar pasajeros
@@ -192,7 +324,9 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger)
  */
 int controller_saveAsText(char* path , LinkedList* pArrayListPassenger)
 {
-    return 1;
+	int retorno;
+	retorno = -1;
+    return retorno;
 }
 
 /** \brief Guarda los datos de los pasajeros en el archivo data.csv (modo binario).
@@ -204,6 +338,24 @@ int controller_saveAsText(char* path , LinkedList* pArrayListPassenger)
  */
 int controller_saveAsBinary(char* path , LinkedList* pArrayListPassenger)
 {
-    return 1;
+	FILE* pfile;
+	Passenger* this;
+	int len;
+	int retorno;
+
+	retorno = -1;
+	pfile = fopen(path,"wb");
+	if(pfile != NULL && pArrayListPassenger != NULL)
+	{
+		len = ll_len(pArrayListPassenger);
+		for(int i = 0; i<len;i++)
+		{
+			this = ll_get(pArrayListPassenger, i);
+			fwrite(this,sizeof(Passenger),1,pfile);
+			retorno = 0;
+		}
+	}
+	fclose(pfile);
+    return retorno;
 }
 

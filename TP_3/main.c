@@ -25,7 +25,6 @@ int main()
 	setbuf(stdout, NULL);
 	int flagOpen = 0;
     int option = 0;
-
     LinkedList* listaPasajeros = ll_newLinkedList();
 
     do{
@@ -46,22 +45,50 @@ int main()
                 break;
 			case 2:
 				//Cargar los datos de los pasajeros en el archivo como binario
-				controller_loadFromBinary("data.csv",listaPasajeros);
+				if(!controller_loadFromBinary("data.bin",listaPasajeros))
+				{
+					puts("Se cargo el archivo con exito !!!");
+					flagOpen = 1;
+				}
+				else
+				{
+					puts("Ups! Hubo un error en la carga! :(");
+				}
 				break;
 			case 3:
 				//Alta pasajero
-				if(!controller_addPassenger(listaPasajeros))
+				if(flagOpen == 1)
 				{
-					flagOpen = 1;
+					controller_addPassenger(listaPasajeros);
+				}
+				else
+				{
+					puts("Ah ocurrido un error al intentar dar de alta!!");
 				}
 				break;
 			case 4:
 				//Modificar pasajero
-				controller_editPassenger(listaPasajeros);
+				if(flagOpen == 1)
+				{
+					puts("|----------MODIFICAR-PASAJERO----------|");
+					controller_editPassenger(listaPasajeros);
+				}
+				else
+				{
+					puts("No se pueden modificar los datos, si no hay datos! . - .");
+				}
 				break;
 			case 5:
 				//Baja pasajero
-				controller_removePassenger(listaPasajeros);
+				if(flagOpen == 1)
+				{
+					puts("|--------BAJA-PASAJERO--------");
+					controller_removePassenger(listaPasajeros);
+				}
+				else
+				{
+					puts("No se puede dar de baja pasajeros, si no hay pasajeros! . - .");
+				}
 				break;
 			case 6:
 				//listar pasajeros
@@ -76,15 +103,38 @@ int main()
 				break;
 			case 7:
 				//Ordenar pasajeros
-				controller_sortPassenger(listaPasajeros);
+				if(flagOpen == 1)
+				{
+					controller_sortPassenger(listaPasajeros);
+				}
+				else
+				{
+					puts("No se pueden ordenar datos, si no hay datos! . - .");
+				}
 				break;
 			case 8:
 				//Guardar los datos de los pasajeros en el archivo como texto
-				controller_saveAsText("data.csv",listaPasajeros);
+				if(flagOpen == 1)
+				{
+					controller_saveAsText("data.csv",listaPasajeros);
+					puts("Datos con formato de texto guardados con exito!!");
+				}
+				else
+				{
+					puts("No se modifico ni implemento nada al archivo!");
+				}
 				break;
 			case 9:
 				//Cargar los datos de los pasajeros en el archivo como binario
-				controller_saveAsBinary("data.csv",listaPasajeros);
+				if(flagOpen == 1)
+				{
+					controller_saveAsBinary("data.bin",listaPasajeros);
+					puts("Datos con formato de binaria guardados con exito!!");
+				}
+				else
+				{
+					puts("No se modifico ni implemento nada al archivo!");
+				}
 				break;
 			case 10:
 				//Salir

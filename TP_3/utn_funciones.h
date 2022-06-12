@@ -17,7 +17,7 @@ float PedirFlotante(char *, char *, char *);
 
 void PedirCadena(char *,char *);
 
-int PedirCadenaConNumero(char *,char *);
+void PedirCadenaConNumero(char *,char *);
 
 int SumarArrays();
 
