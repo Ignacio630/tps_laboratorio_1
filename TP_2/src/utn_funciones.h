@@ -17,6 +17,8 @@ int PedirFlotante(char [], char [], char []);
 
 void PedirCadena(char [],char []);
 
+void PedirCadenaConNumero(char* ,char* );
+
 int SumarArrays();
 
 void MostrarCadena(char []);
@@ -34,5 +36,7 @@ int ValidarParidad(int);
 int ValidarNumeroMinimoMaximo(int, int, int, char[]);
 
 int ValirdarFloatMinimo(float ,int ,char[] );
+
+int ValidarCadenaConNumero(char* );
 
 #endif /* UTN_FUNCIONES_H_ */

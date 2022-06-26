@@ -10,8 +10,7 @@
 #include <ctype.h>
 #include "utn_funciones.h"
 //DEFINES
-#define TAM 5
-#define TAM_F 5
+#define TAM 10
 #define LIBRE 0
 #define OCUPADO 1
 #define COMERCIAL 0
@@ -77,7 +76,7 @@ int modifyPassenger(Passenger*, int, int);
 * \param order int [1] indicate UP - [0] indicate DOWN
 * \return int Return (-1) if Error [Invalid length or NULL pointer] - (0) if Ok
 */
-int sortPassengers(Passenger* list, int, int);
+int sortPassenger(Passenger* list, int, int);
 /// @brief print only one element of passengers array
 /// @param list Passenger*
 /// @return int return(-1) if Errir [NULL poinater] - (0) if ok
@@ -88,7 +87,7 @@ int printPassengers(Passenger* ,int);
 * \param order int [1] indicate UP - [0] indicate DOWN
 * \return int Return (-1) if Error [Invalid length or NULL pointer] - (0) if Ok
 */
-int sortPassengersByCode(Passenger*, int, int);
+int sortPassengerByNameAndType(Passenger*, int, int);
 /// @brief add 5 existing passengers with all the data need to inform
 ///
 /// @param passenger Passenger*
@@ -96,5 +95,6 @@ int sortPassengersByCode(Passenger*, int, int);
 /// @param len int
 void AltaForzada(Passenger* , Passenger*, int);
 
+void ValidarTipoPasajero(Passenger* , int );
 
 #endif /* GENERICO_C_ */

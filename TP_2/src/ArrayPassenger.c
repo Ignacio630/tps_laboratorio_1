@@ -33,13 +33,13 @@ int initPassengers(Passenger* list, int tam)
 	{
 		for(i=0;i<tam;i++)
 		{
-			list[i].isEmpty=LIBRE;
+			list[i].isEmpty = LIBRE;
 			retorno = 0;
 		}
 	}
 	return retorno;
 }
-int addPassenger(Passenger* list, int len, int id, char name[], char lastName[], float price, int typePassenger, char flycode[], int statusFlight)
+int addPassenger(Passenger* list, int len, int id, char* name, char* lastName, float price, int typePassenger, char* flycode, int statusFlight)
 {
 	int retorno;
 	retorno = -1;
@@ -61,7 +61,7 @@ int addPassenger(Passenger* list, int len, int id, char name[], char lastName[],
 				list[banderaLibre].price = price;
 				utn_GetEntero(&typePassenger, "Ingrese el tipo de vuelo\n1.TURISTA\n2.PREMIUN\n3.EJECUTIVO\nIngrese el tipo de pasajero:", "Error, tipo de pasajero invalido", 1, 3, 99);
 				list[banderaLibre].typePassenger = typePassenger;
-				PedirCadena(flycode, "Ingrese el codigo de vuelo: ");
+				PedirCadenaConNumero(flycode, "Ingrese el codigo de vuelo: ");
 				strcpy(list[banderaLibre].flycode, flycode);
 				utn_GetEntero(&statusFlight, "Ingrese el estado de vuelo\n1.ACTIVO\n2.DEMORADO\n3.CANCELADO\nElija la opcion:", "Error, estado de vuelo invalido", 1, 3, 99);
 				list[banderaLibre].isEmpty = OCUPADO;
@@ -123,7 +123,7 @@ int modifyPassenger(Passenger* list, int len, int id)
 						bandera=1;
 						break;
 					case 5:
-						PedirCadena(list[i].flycode, "Ingrese la modificacion del codigo de vuelo:");
+						PedirCadenaConNumero(list[i].flycode, "Ingrese la modificacion del codigo de vuelo:");
 						bandera=1;
 						break;
 					case 6:
@@ -145,7 +145,7 @@ int removePassenger(Passenger* list, int len, int id)
 	int i;
 	char opcion;
 	int flag=0;
-	utn_GetEntero(&id, "Ingrese el id del pasajero que quiere remover :", "Error", 0, 2000, 99);
+	utn_GetEntero(&id, "Ingrese el id del pasajero que quiere remover :", "Error\n", 0, 2000, 99);
 	if(list!=NULL && len>0)
 	{
 		for(i=0;i<len;i++)
@@ -171,16 +171,24 @@ int removePassenger(Passenger* list, int len, int id)
 	}
 	return flag;
 }
-int printPassengers(Passenger* list,int len)
+int printPassengers(Passenger* list ,int len)
 {
 	int i;
 	puts("<-----------------------------!INFORME PASAJEROS!------------------------------->");
 	puts("|Id:\t|Nombre\t\t|Apellido\t|Precio\t\t|Clase \t|Codigo de vuelo| Estado del vuelo|");
+
+	ValidarTipoPasajero(list, len);
 	for(i=0;i<len;i++)
 	{
 		if(list[i].isEmpty == OCUPADO)
 		{
-			printf("|%-7d|%-15s|%-15s|%-15.2f|%-7d|%15s|%17d|\n",list[i].id ,list[i].name, list[i].lastName,list[i].price, list[i].typePassenger, list[i].flycode, list[i].statusFlight);
+			printf("|%-7d|%-15s|%-15s|%-15.2f|%-7d|%15s|%17d|\n",list[i].id ,
+																 list[i].name,
+																 list[i].lastName,
+																 list[i].price,
+																 list[i].typePassenger,
+																 list[i].flycode,
+																 list[i].statusFlight);
 		}
 	}
 	return 0;
@@ -191,7 +199,59 @@ int printPassengers(Passenger* list,int len)
 * \param order int [1] indicate UP - [0] indicate DOWN
 * \return int Return (-1) if Error [Invalid length or NULL pointer] - (0) if Ok
 */
-int sortPassenger(Passenger* list, int len, int order) {
+int sortPassengerByNameAndType(Passenger* list, int len, int order) {
+	int retorno = -1;
+	int i;
+	int j;
+	Passenger aux;
+
+	if (list != NULL && TAM > 0)
+	{
+		switch (order)
+		{
+		case 0:
+			for (i=0; i < TAM - 1; i++)
+			{
+				for (j = i+1; j<TAM;j++)
+				{
+					if (list[i].isEmpty == OCUPADO && list[j].isEmpty == OCUPADO)
+					{
+						if (!strcmp(list[i].name,list[j].name) && list[i].typePassenger > list[j].typePassenger) {
+							aux = list[i];
+							list[i] = list[j];
+							list[j] = aux;
+						}
+					}
+				}
+			}
+			retorno = 0;
+			break;
+		case 1:
+			for (i = 0; i < TAM - 1; i++)
+			{
+				for (j=i + 1; j<TAM;j++)
+				{
+					if (list[i].isEmpty == OCUPADO && list[j].isEmpty == OCUPADO)
+					{
+						if (list[i].id < list[j].id) {
+							aux = list[i];
+							list[i] = list[j];
+							list[j] = aux;
+						}
+					}
+				}
+			}
+			retorno = 0;
+			break;
+		default:
+			puts("Tiene que ingresar un criterio valido!");
+			retorno = -1;
+			break;
+		}
+	}
+	return retorno;
+}
+int sortPassengerByID(Passenger* list, int len, int order) {
 	int retorno = -1;
 	int i;
 	int j;
@@ -223,7 +283,7 @@ int sortPassenger(Passenger* list, int len, int order) {
 			{
 				for (j=i + 1; j<TAM;j++)
 				{
-					if (list[i].isEmpty == OCUPADO&& list[j].isEmpty == OCUPADO)
+					if (list[i].isEmpty == OCUPADO && list[j].isEmpty == OCUPADO)
 					{
 						if (list[i].id < list[j].id) {
 							aux = list[i];
@@ -243,20 +303,53 @@ int sortPassenger(Passenger* list, int len, int order) {
 	}
 	return retorno;
 }
-void AltaForzada(Passenger* pasajero, Passenger* list, int len)
+void AltaForzada(Passenger* listaPasajeros, Passenger* listaForzada, int size)
 {
 	int espacioLibre;
 
-	if(pasajero != NULL && list != NULL && len >0)
+	if(listaPasajeros!= NULL && listaForzada != NULL && size > 0)
 	{
-		for(int j=0;j<TAM_F;j++)
+		for(int j=0;j<size;j++)
 		{
-			espacioLibre=FindFree(list, len);
+			espacioLibre = FindFree(listaPasajeros, size);
 			if(espacioLibre != -1)
 			{
-				pasajero[espacioLibre]=list[j];
+				listaPasajeros[espacioLibre] = listaForzada[j];
 			}
 		}
 	}
-
 }
+void ValidarTipoPasajero(Passenger* listaPasajeros, int len)
+{
+	char auxTypePassenger[50];
+
+	if(listaPasajeros != NULL && len > 0)
+	{
+		if(listaPasajeros->typePassenger == 0)
+		{
+			strcpy(auxTypePassenger, "COMERCIAL");
+		}
+		if(listaPasajeros->typePassenger == 1)
+		{
+			strcpy(auxTypePassenger, "PREMIUN");
+		}
+		if(listaPasajeros->typePassenger == 2)
+		{
+			strcpy(auxTypePassenger, "EJECUTIVO");
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

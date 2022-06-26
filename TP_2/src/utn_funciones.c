@@ -5,7 +5,7 @@ static int GetInt(int*);
 static int GetFloat(float* );
 static int esNumerica(char*);
 static int esFlotante(char*);
-
+static int esNumericaAndCadena(char*);
 static int esNumerica(char* cadena)
 {
 	int retorno = -1;
@@ -55,13 +55,18 @@ static int esFlotante(char* numero)
 		retorno = 1;
 		for(i=0;i<len && numero[i] != '\0' ;i++)
 		{
-			if(i !=0 && (numero[i] == '+' || numero[i] == '-') && numero[i] == '.' && punto == 0)
+			if(i !=0 && (numero[i] == '+' || numero[i] == '-') )
 			{
 				punto = 1;
 				continue;
 			}
 			if(numero[i] > '9' || numero[i]  < '0')
 			{
+				if(numero[i] == '.' && punto == 0)
+				{
+					punto = 1;
+					continue;
+				}
 				retorno = 0;
 				break;
 			}
@@ -78,6 +83,54 @@ static int GetFloat(float* pResultado)
 	{
 		retorno = 0;
 		*pResultado = atof(bufferFloat);
+	}
+	return retorno;
+}
+static int esNumericaAndCadena(char* numero){
+	int retorno = -1;
+	int len;
+	int flagChar;
+	int flagInt;
+	flagInt = 0;
+	flagInt = 0;
+	len=strlen(numero);
+	if(numero != NULL && len > 0)
+	{
+		retorno = 1;
+		for(int i=0;i<len && numero[i] != '\0' ;i++)
+		{
+			if(!isdigit(numero[i]))
+			{
+				flagInt = 1;
+			}
+			if(!isalpha(numero[i]))
+			{
+				flagChar = 1;
+			}
+
+			if(flagChar == 1 && flagInt == 0)
+			{
+				retorno = 0;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+int ValidarCadenaConNumero(char* cadena)
+{
+	int retorno=1;
+	int len;
+	if(cadena!=NULL)
+	{
+		len=strlen(cadena);
+		for(int i=0;i<len;i++)
+		{
+			if(!esNumericaAndCadena(cadena))
+			{
+				retorno=0;
+			}
+		}
 	}
 	return retorno;
 }
@@ -185,6 +238,19 @@ int PedirOpciones(char mensaje[], char mensajeError[])
 	}
 	retorno=atoi(opciones);
 	return retorno;
+}
+void PedirCadenaConNumero(char* cadena,char* mensaje)
+{
+	printf(mensaje);
+	fflush(stdin);
+	scanf("%s",cadena);
+	while(!ValidarCadenaConNumero(cadena))
+	{
+		printf("Ups! a ocurrido un error!\n");
+		printf(mensaje);
+		fflush(stdin);
+		scanf("%s",cadena);
+	}
 }
 int PedirFlotante(char numero[], char mensaje[], char mensajeError[])
 {

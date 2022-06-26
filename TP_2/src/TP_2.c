@@ -5,27 +5,27 @@ int main(void)
 	setbuf(stdout,NULL);
 
 	int opciones;
+	int opcionesInforme;
 	int banderaAlta = 0;
-	int contadorPasajeros=0;
-	Passenger pasajero[TAM];
-	Passenger listaForzada[TAM_F]={{0,"Abril","Danelón",100000,2,"oFsdD", ACTIVO},
-								   {1,"Emmanuel","Maciel",32000,0,"esFSD", DEMORADO},
-								   {2,"Federico","De Almeida",56000,1,"NsdFT", CANCELADO},
-								   {3,"Anger","Gonzales",19000,0,"oFsdD", ACTIVO},
-								   {4,"Luciano","Giangaspro",38000.43,1,"esFSD", DEMORADO}};
-	initPassengers(pasajero, TAM);
-
+	int contadorlistaPasajeros=0;
+	Passenger listaPasajeros[TAM];
+	Passenger listaForzada[TAM]={{0,"Abril","Danelón",100000,2,"oFsdD876", ACTIVO, OCUPADO},
+								   {1,"Emmanuel","Maciel",32000,0,"esFSD354", DEMORADO, OCUPADO},
+								   {2,"Federico","De Almeida",56000,1,"NsdFT312", CANCELADO, OCUPADO},
+								   {3,"Anger","Gonzales",19000,0,"oFsdD543", ACTIVO, OCUPADO},
+								   {4,"Luciano","Giangaspro",38000.43,1,"esFSD543", DEMORADO, OCUPADO}};
+	initPassengers(listaPasajeros, TAM);
 	do{
 		opciones = PedirOpciones("1.ALTA\n2.MODIFICAR\n3.BAJA\n4.INFORMAR\n5.ALTA FORZADA\n6.SALIR\nElija una opcion: ", "Ups! Opcion invalida!!\n");
 		switch (opciones)
 		{
 			case 1:
 				system("cls");
-				if(pasajero[TAM].isEmpty==LIBRE)
+				if(listaPasajeros[TAM].isEmpty == LIBRE)
 				{
-					addPassenger(pasajero, TAM, pasajero[TAM].id, pasajero[TAM].name, pasajero[TAM].lastName, pasajero[TAM].price, pasajero[TAM].typePassenger, pasajero[TAM].flycode, pasajero[TAM].statusFlight);
+					addPassenger(listaPasajeros, TAM, listaPasajeros[TAM].id, listaPasajeros[TAM].name, listaPasajeros[TAM].lastName, listaPasajeros[TAM].price, listaPasajeros[TAM].typePassenger, listaPasajeros[TAM].flycode, listaPasajeros[TAM].statusFlight);
 					puts("Se dio de alta satisfacctoriamente!!");
-					contadorPasajeros++;
+					contadorlistaPasajeros++;
 				}
 				else
 				{
@@ -33,47 +33,75 @@ int main(void)
 				}
 				break;
 			case 2:
-				if(contadorPasajeros)
+				if(contadorlistaPasajeros)
 				{
-					modifyPassenger(pasajero, TAM, pasajero->id);
+					modifyPassenger(listaPasajeros, TAM, listaPasajeros->id);
 				}
 				else
 				{
-					puts("No existe pasajero a modificar!");
+					puts("No existe listaPasajeros a modificar!");
 				}
 				system("cls");
 				break;
 			case 3:
-				if(contadorPasajeros>0)
+				if(contadorlistaPasajeros>0)
 				{
-					removePassenger(pasajero, TAM, pasajero->id);
-					puts("Se dio de baja exitosamente");
-					contadorPasajeros--;
+					if(removePassenger(listaPasajeros, TAM, listaPasajeros->id)){
+						puts("Se dio de baja exitosamente");
+						contadorlistaPasajeros--;
+					}
+					else{
+						puts("No existe el id que desea elminar");
+					}
 				}
 				else
 				{
-					puts("Error no existe pasajero para eliminar");
+					puts("Error no existe listaPasajeros para eliminar");
 				}
 				system("cls");
 				break;
 			case 4:
-				if(contadorPasajeros >0)
+				if(contadorlistaPasajeros >0)
 				{
-					sortPassenger(pasajero, TAM, 0);
-					printPassengers(pasajero, TAM);
+					do{
+						puts("|----------------------------------------MENU-DE-INFORMES----------------------------------------|");
+						puts("|1. Lista de pasajeros ordenados alfabéticamente por Apellido y Tipo de pasajero.");
+						puts("|2. Total y promedio de los precios de los pasajes, y cuántos pasajeros superan el precio promedio.");
+						puts("|3. Listado de los pasajeros por Código de vuelo y estados de vuelos ‘ACTIVO’");
+						puts("|4.Salir");
+						opcionesInforme = PedirOpciones("|->Ingrese una opcion: ", "Ups! Opcion invalida!!\n");
+						switch (opcionesInforme) {
+							case 1:
+									sortPassengerByNameAndType(listaPasajeros, TAM, 0);
+									printPassengers(listaPasajeros, TAM);
+								break;
+							case 2:
+
+								break;
+							case 3:
+
+								break;
+							case 4:
+									puts("Saliendo...");
+								break;
+							default:
+									puts("Ups! Opcion invalida");
+								break;
+						}
+					}while(opcionesInforme != 4);
 				}
 				else
 				{
-					puts("Haga al menos un alta para mostrar el informe");
+					puts("Haga al menos un alta para mostrar el menu de informe");
 				}
 				system("cls");
 				break;
 			case 5:
 				if(banderaAlta==0)
 				{
-					AltaForzada(pasajero, listaForzada, TAM);
+					AltaForzada(listaPasajeros, listaForzada, TAM);
 					puts("Carga forzada realizada con exito");
-					contadorPasajeros += TAM_F;
+					contadorlistaPasajeros += TAM;
 					banderaAlta=1;
 				}
 				else
