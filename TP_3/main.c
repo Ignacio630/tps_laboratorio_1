@@ -24,7 +24,7 @@ int main()
 {
 	setbuf(stdout, NULL);
 	int flagOpen = 0;
-    int option = 0;
+    int option;
     LinkedList* listaPasajeros = ll_newLinkedList();
 
     do{
@@ -116,7 +116,7 @@ int main()
 				//Guardar los datos de los pasajeros en el archivo como texto
 				if(flagOpen == 1)
 				{
-					controller_saveAsText("data2.csv",listaPasajeros);
+					controller_saveAsText("data.csv",listaPasajeros);
 					puts("Datos con formato de texto guardados con exito!!");
 				}
 				else

@@ -224,7 +224,7 @@ int controller_removePassenger(LinkedList* pArrayListPassenger)
 	int retorno;
 
 
-	utn_GetEntero(&id,"|->Ingrese el ID del pasajero que quiere remover de la lista", "Error", 0, 10000, 99);
+	utn_GetEntero(&id,"|->Ingrese el ID del pasajero que quiere remover de la lista: ", "Error", 0, 10000, 99);
     index= findPassengerById(pArrayListPassenger, id);
     if(index != -1)
     {
@@ -346,23 +346,22 @@ int controller_saveAsText(char* path , LinkedList* pArrayListPassenger)
 	pfile = fopen(path,"w");
 	if(pfile != NULL && pArrayListPassenger != NULL)
 	{
-			len = ll_len(pArrayListPassenger);
-			for(int i = 0; i < len;i++)
+		len = ll_len(pArrayListPassenger);
+		for(int i = 0; i < len;i++)
+		{
+			this = ll_get(pArrayListPassenger, i);
+			if(!Passenger_getId(this, &bufferId) &&
+			   !Passenger_getNombre(this, bufferNombre) &&
+			   !Passenger_getApellido(this, bufferApellido) &&
+			   !Passenger_getPrecio(this, &bufferPrecio) &&
+			   !Passenger_getCodigoVuelo(this, bufferCodigoVuelo) &&
+			   !Passenger_getTipoPasajero(this, bufferTipoPasajero) &&
+			   !Passenger_getEstadoVuelo(this, bufferEstadoVuelo))
 			{
-				this = ll_get(pArrayListPassenger, i);
-				if(!Passenger_getId(this, &bufferId) ||
-				   !Passenger_getNombre(this, bufferNombre) ||
-				   !Passenger_getApellido(this, bufferApellido) ||
-				   !Passenger_getPrecio(this, &bufferPrecio) ||
-				   !Passenger_getCodigoVuelo(this, bufferCodigoVuelo) ||
-				   !Passenger_getTipoPasajero(this, bufferTipoPasajero) ||
-				   !Passenger_getEstadoVuelo(this, bufferEstadoVuelo))
-				{
-				fprintf(pfile,"%d,%s,%s,%f,%s,%s,%s\n",bufferId,bufferNombre,bufferApellido, bufferPrecio, bufferTipoPasajero,bufferCodigoVuelo, bufferEstadoVuelo);
+				fprintf(pfile,"%d,%s,%s,%f,%s,%s,%s\n",bufferId,bufferNombre,bufferApellido, bufferPrecio,bufferCodigoVuelo, bufferTipoPasajero, bufferEstadoVuelo);
 				retorno = 0;
-				}
-
 			}
+		}
 	}
 	fclose(pfile);
 	return retorno;
