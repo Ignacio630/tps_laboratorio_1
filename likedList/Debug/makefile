@@ -11,8 +11,6 @@ RM := rm -rf
 -include testing/src/subdir.mk
 -include testing/subdir.mk
 -include src/subdir.mk
--include objects.mk
-
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(strip $(C_DEPS)),)
 -include $(C_DEPS)
@@ -41,7 +39,7 @@ all: main-build
 main-build: likedList
 
 # Tool invocations
-likedList: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+likedList: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
 	gcc  -o "likedList" $(OBJS) $(USER_OBJS) $(LIBS)
