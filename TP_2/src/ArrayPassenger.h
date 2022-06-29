@@ -25,9 +25,9 @@ struct{
 	char name[51];
 	char lastName[51];
 	float price;
-	int typePassenger;
+	char typePassenger[30];
 	char flycode[10];
-	int statusFlight;
+	char statusFlight[30];
 	int isEmpty;
 }typedef Passenger;
 
@@ -54,7 +54,7 @@ int initPassengers(Passenger*, int );
 * \param flycode[] char
 * \return int Return (-1) if Error [Invalid length or NULL pointer or without
 free space] - (0) if Ok*/
-int addPassenger(Passenger* , int , int , char [], char [], float , int , char[], int);
+int addPassenger(Passenger* , int , int , char *, char *, float , char* , char*, char*);
 /** \brief find a Passenger by Id en returns the index position in array.
 * \param list Passenger*
 * \param len int
@@ -94,7 +94,5 @@ int sortPassengerByNameAndType(Passenger*, int, int);
 /// @param list Passenger*
 /// @param len int
 void AltaForzada(Passenger* , Passenger*, int);
-
-void ValidarTipoPasajero(Passenger* , int );
 
 #endif /* GENERICO_C_ */

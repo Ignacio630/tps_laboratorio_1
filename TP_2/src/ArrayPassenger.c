@@ -39,12 +39,14 @@ int initPassengers(Passenger* list, int tam)
 	}
 	return retorno;
 }
-int addPassenger(Passenger* list, int len, int id, char* name, char* lastName, float price, int typePassenger, char* flycode, int statusFlight)
+int addPassenger(Passenger* list, int len, int id, char* name, char* lastName, float price, char* typePassenger, char* flycode, char* statusFlight)
 {
 	int retorno;
 	retorno = -1;
 	int banderaLibre;
 	int i;
+	int auxType;
+	int auxStatus;
 	banderaLibre = FindFree(list, len);
 	if(list != NULL && len >= 0)
 	{
@@ -59,11 +61,38 @@ int addPassenger(Passenger* list, int len, int id, char* name, char* lastName, f
 				strcpy(list[banderaLibre].lastName,lastName);
 				utn_GetFlotante(&price, "Ingrese el precio del pasaje: ", "Error, el numero ingresado no es un flotante\n", 0, 4000000, 99);
 				list[banderaLibre].price = price;
-				utn_GetEntero(&typePassenger, "Ingrese el tipo de vuelo\n1.TURISTA\n2.PREMIUN\n3.EJECUTIVO\nIngrese el tipo de pasajero:", "Error, tipo de pasajero invalido", 1, 3, 99);
-				list[banderaLibre].typePassenger = typePassenger;
+				utn_GetEntero(&auxType, "Ingrese el tipo de vuelo\n1.TURISTA\n2.PREMIUN\n3.EJECUTIVO\nIngrese el tipo de pasajero:", "Error, tipo de pasajero invalido", 1, 3, 99);
+				switch(auxType){
+					case 1:
+						strcpy(list[banderaLibre].typePassenger,"TURISTA");
+						break;
+					case 2:
+						strcpy(list[banderaLibre].typePassenger,"PREMIUN");
+						break;
+					case 3:
+						strcpy(list[banderaLibre].typePassenger,"EJECUTIVO");
+						break;
+					default:
+						puts("Ups! Opcion incorrecta");
+						break;
+				}
 				PedirCadenaConNumero(flycode, "Ingrese el codigo de vuelo: ");
 				strcpy(list[banderaLibre].flycode, flycode);
-				utn_GetEntero(&statusFlight, "Ingrese el estado de vuelo\n1.ACTIVO\n2.DEMORADO\n3.CANCELADO\nElija la opcion:", "Error, estado de vuelo invalido", 1, 3, 99);
+				utn_GetEntero(&auxStatus, "Ingrese el estado de vuelo\n1.ACTIVO\n2.DEMORADO\n3.CANCELADO\nElija la opcion:", "Error, estado de vuelo invalido", 1, 3, 99);
+				switch(auxStatus){
+					case 1:
+						strcpy(list[banderaLibre].statusFlight,"ACTIVO");
+						break;
+					case 2:
+						strcpy(list[banderaLibre].statusFlight,"DEMORADO");
+						break;
+					case 3:
+						strcpy(list[banderaLibre].statusFlight,"CANCELADO");
+						break;
+					default:
+						puts("Ups! Opcion incorrecta");
+						break;
+				}
 				list[banderaLibre].isEmpty = OCUPADO;
 				retorno = 0;
 				break;
@@ -96,6 +125,7 @@ int modifyPassenger(Passenger* list, int len, int id)
 	int bandera = 0;
 	int i;
 	int opciones;
+	int auxType;
 	utn_GetEntero(&id, "Ingrese el id del pasajero que queire modificar: ", "Error, pasajero no encontrado!\n", 0, 2000, 99);
 	for(i=0;i<len;i++)
 	{
@@ -119,7 +149,21 @@ int modifyPassenger(Passenger* list, int len, int id)
 						bandera=1;
 						break;
 					case 4:
-						utn_GetEntero(&list->typePassenger, "Ingrese la modificacion del tipo de pasajero:", "Error", 0, 3, 99);
+						utn_GetEntero(&auxType, "Ingrese el tipo de vuelo\n1.TURISTA\n2.PREMIUN\n3.EJECUTIVO\nIngrese el tipo de pasajero a modificacion:", "Error", 0, 3, 99);
+						switch(auxType){
+							case 1:
+								strcpy(list[i].typePassenger,"TURISTA");
+								break;
+							case 2:
+								strcpy(list[i].typePassenger,"PREMIUN");
+								break;
+							case 3:
+								strcpy(list[i].typePassenger,"EJECUTIVO");
+								break;
+							default:
+								puts("Ups! Opcion incorrecta");
+								break;
+						}
 						bandera=1;
 						break;
 					case 5:
@@ -175,14 +219,13 @@ int printPassengers(Passenger* list ,int len)
 {
 	int i;
 	puts("<-----------------------------!INFORME PASAJEROS!------------------------------->");
-	puts("|Id:\t|Nombre\t\t|Apellido\t|Precio\t\t|Clase \t|Codigo de vuelo| Estado del vuelo|");
+	puts("|Id:\t|Nombre\t\t|Apellido\t|Precio\t\t|Clase \t   |Codigo de vuelo| Estado del vuelo|");
 
-	ValidarTipoPasajero(list, len);
 	for(i=0;i<len;i++)
 	{
 		if(list[i].isEmpty == OCUPADO)
 		{
-			printf("|%-7d|%-15s|%-15s|%-15.2f|%-7d|%15s|%17d|\n",list[i].id ,
+			printf("|%-7d|%-15s|%-15s|%-15.2f|%-10s|%15s|%17s|\n",list[i].id ,
 																 list[i].name,
 																 list[i].lastName,
 																 list[i].price,
@@ -216,7 +259,7 @@ int sortPassengerByNameAndType(Passenger* list, int len, int order) {
 				{
 					if (list[i].isEmpty == OCUPADO && list[j].isEmpty == OCUPADO)
 					{
-						if (!strcmp(list[i].name,list[j].name) && list[i].typePassenger > list[j].typePassenger) {
+						if (!strcmp(list[i].name,list[j].name) && strcmp(list[i].typePassenger,list[j].typePassenger)) {
 							aux = list[i];
 							list[i] = list[j];
 							list[j] = aux;
@@ -319,27 +362,6 @@ void AltaForzada(Passenger* listaPasajeros, Passenger* listaForzada, int size)
 		}
 	}
 }
-void ValidarTipoPasajero(Passenger* listaPasajeros, int len)
-{
-	char auxTypePassenger[50];
-
-	if(listaPasajeros != NULL && len > 0)
-	{
-		if(listaPasajeros->typePassenger == 0)
-		{
-			strcpy(auxTypePassenger, "COMERCIAL");
-		}
-		if(listaPasajeros->typePassenger == 1)
-		{
-			strcpy(auxTypePassenger, "PREMIUN");
-		}
-		if(listaPasajeros->typePassenger == 2)
-		{
-			strcpy(auxTypePassenger, "EJECUTIVO");
-		}
-	}
-}
-
 
 
 

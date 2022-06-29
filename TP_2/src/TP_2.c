@@ -9,11 +9,11 @@ int main(void)
 	int banderaAlta = 0;
 	int contadorlistaPasajeros=0;
 	Passenger listaPasajeros[TAM];
-	Passenger listaForzada[TAM]={{0,"Abril","Danelón",100000,2,"oFsdD876", ACTIVO, OCUPADO},
-								   {1,"Emmanuel","Maciel",32000,0,"esFSD354", DEMORADO, OCUPADO},
-								   {2,"Federico","De Almeida",56000,1,"NsdFT312", CANCELADO, OCUPADO},
-								   {3,"Anger","Gonzales",19000,0,"oFsdD543", ACTIVO, OCUPADO},
-								   {4,"Luciano","Giangaspro",38000.43,1,"esFSD543", DEMORADO, OCUPADO}};
+	Passenger listaForzada[TAM]={{0,"Abril","Danelón",100000,"EJECUTIVO","oFsdD876", "ACTIVO", OCUPADO},
+								   {1,"Emmanuel","Maciel",32000,"TURISTA","esFSD354", "DEMORADO", OCUPADO},
+								   {2,"Federico","De Almeida",56000,"PREMIUN","NsdFT312", "CANCELADO", OCUPADO},
+								   {3,"Anger","Gonzales",19000,"TURISTA","oFsdD543", "ACTIVO", OCUPADO},
+								   {4,"Luciano","Giangaspro",38000.43,"PREMIUN","esFSD543", "DEMORADO", OCUPADO}};
 	initPassengers(listaPasajeros, TAM);
 	do{
 		opciones = PedirOpciones("1.ALTA\n2.MODIFICAR\n3.BAJA\n4.INFORMAR\n5.ALTA FORZADA\n6.SALIR\nElija una opcion: ", "Ups! Opcion invalida!!\n");
