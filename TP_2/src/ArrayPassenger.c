@@ -259,27 +259,30 @@ int sortPassengerByNameAndType(Passenger* list, int len, int order) {
 				{
 					if (list[i].isEmpty == OCUPADO && list[j].isEmpty == OCUPADO)
 					{
-						if (!strcmp(list[i].name,list[j].name) && strcmp(list[i].typePassenger,list[j].typePassenger)) {
+						if (strcmp(list[i].lastName,list[j].lastName) >= 0 && strcmp(list[i].typePassenger,list[j].typePassenger) >= 0) {
 							aux = list[i];
 							list[i] = list[j];
 							list[j] = aux;
+
+							retorno = 0;
 						}
 					}
 				}
 			}
-			retorno = 0;
 			break;
 		case 1:
-			for (i = 0; i < TAM - 1; i++)
+			for (i=0; i < TAM - 1; i++)
 			{
-				for (j=i + 1; j<TAM;j++)
+				for (j = i+1; j<TAM;j++)
 				{
 					if (list[i].isEmpty == OCUPADO && list[j].isEmpty == OCUPADO)
 					{
-						if (list[i].id < list[j].id) {
+						if (strcmp(list[i].lastName,list[j].lastName) <= 0 && strcmp(list[i].typePassenger,list[j].typePassenger) <= 0) {
 							aux = list[i];
 							list[i] = list[j];
 							list[j] = aux;
+
+							retorno = 0;
 						}
 					}
 				}
@@ -291,6 +294,49 @@ int sortPassengerByNameAndType(Passenger* list, int len, int order) {
 			retorno = -1;
 			break;
 		}
+	}
+	return retorno;
+}
+int SortPromedioYTotalPasajeros(Passenger* lista, int size)
+{
+	int retorno = -1;
+	float precioPasajes = 0;
+	float promedioPasajeros = 0;
+	int contadorPromedio = 0;
+
+	if(lista != NULL && size > 0)
+	{
+
+		for(int i=0;i<size;i++)
+		{
+			if((lista+i)->isEmpty == OCUPADO)
+			{
+				precioPasajes+=(lista+i)->price;
+			}
+		}
+
+
+		retorno = precioPasajes/size;
+		for(int i=0;i<size;i++)
+		{
+			if((lista+i)->isEmpty == OCUPADO && (lista+i)->price > promedioPasajeros)
+			{
+				contadorPromedio++;
+			}
+		}
+
+		retorno=0;
+	}
+
+	printf("El total de los precios de los pasajes es de: %.2f\n", precioPasajes);
+	printf("El promedio del total de los precios de los pasajes es de: %.2f\n", promedioPasajeros);
+	if(contadorPromedio == 0)
+	{
+		printf("Ningun pasajero supera el precio promedio\n");
+	}
+	else
+	{
+		printf("La cantidad de pasajeros que superan el precio promedio es de: %d\n", contadorPromedio);
 	}
 	return retorno;
 }
@@ -346,6 +392,64 @@ int sortPassengerByID(Passenger* list, int len, int order) {
 	}
 	return retorno;
 }
+int sorPassengerByFlyCodeAndFlightStatus(Passenger* list,int size, int order)
+{
+	int retorno;
+	retorno = -1;
+	int i;
+	int j;
+	Passenger aux;
+
+	if (list != NULL && TAM > 0)
+	{
+		switch (order)
+		{
+		case 0:
+			for (i=0; i < TAM - 1; i++)
+			{
+				for (j = i+1; j<TAM;j++)
+				{
+					if (list[i].isEmpty == OCUPADO && list[j].isEmpty == OCUPADO)
+					{
+						if (strcmp(list[i].flycode,list[j].flycode) >= 0 && strcmp(list[i].statusFlight,"ACTIVO") >= 0 && strcmp(list[j].statusFlight,"ACTIVO") >= 0) {
+							aux = list[i];
+							list[i] = list[j];
+							list[j] = aux;
+
+							retorno = 0;
+						}
+					}
+				}
+			}
+			break;
+		case 1:
+			for (i=0; i < TAM - 1; i++)
+			{
+				for (j = i+1; j<TAM;j++)
+				{
+					if (list[i].isEmpty == OCUPADO && list[j].isEmpty == OCUPADO)
+					{
+						if (strcmp(list[i].flycode,list[j].flycode) <= 0 && strcmp(list[i].statusFlight,"ACTIVO") <= 0 && strcmp(list[j].statusFlight,"ACTIVO") <= 0) {
+							aux = list[i];
+							list[i] = list[j];
+							list[j] = aux;
+
+							retorno = 0;
+						}
+					}
+				}
+			}
+			retorno = 0;
+			break;
+		default:
+			puts("Tiene que ingresar un criterio valido!");
+			break;
+		}
+	}
+
+
+	return retorno;
+}
 void AltaForzada(Passenger* listaPasajeros, Passenger* listaForzada, int size)
 {
 	int espacioLibre;
@@ -362,16 +466,3 @@ void AltaForzada(Passenger* listaPasajeros, Passenger* listaForzada, int size)
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

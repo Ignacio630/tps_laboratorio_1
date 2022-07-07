@@ -88,11 +88,18 @@ int printPassengers(Passenger* ,int);
 * \return int Return (-1) if Error [Invalid length or NULL pointer] - (0) if Ok
 */
 int sortPassengerByNameAndType(Passenger*, int, int);
+int SortPromedioYTotalPasajeros(Passenger* , int );
 /// @brief add 5 existing passengers with all the data need to inform
 ///
 /// @param passenger Passenger*
 /// @param list Passenger*
 /// @param len int
 void AltaForzada(Passenger* , Passenger*, int);
+/// @brief	sort the elements in the array of passenger, the argument order indicate UP or DOWN order
+///
+/// @param list Passenger*
+/// @param int len
+/// @param int order
+int sorPassengerByFlyCodeAndFlightStatus(Passenger*,int,int );
 
 #endif /* GENERICO_C_ */

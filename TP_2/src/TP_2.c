@@ -11,8 +11,8 @@ int main(void)
 	Passenger listaPasajeros[TAM];
 	Passenger listaForzada[TAM]={{0,"Abril","Danelón",100000,"EJECUTIVO","oFsdD876", "ACTIVO", OCUPADO},
 								   {1,"Emmanuel","Maciel",32000,"TURISTA","esFSD354", "DEMORADO", OCUPADO},
-								   {2,"Federico","De Almeida",56000,"PREMIUN","NsdFT312", "CANCELADO", OCUPADO},
-								   {3,"Anger","Gonzales",19000,"TURISTA","oFsdD543", "ACTIVO", OCUPADO},
+								   {2,"Federico","De Almeida",56000,"PREMIUN","esFSD543", "CANCELADO", OCUPADO},
+								   {3,"Anger","Gonzales",19000,"TURISTA","esFSD354", "ACTIVO", OCUPADO},
 								   {4,"Luciano","Giangaspro",38000.43,"PREMIUN","esFSD543", "DEMORADO", OCUPADO}};
 	initPassengers(listaPasajeros, TAM);
 	do{
@@ -61,7 +61,7 @@ int main(void)
 				system("cls");
 				break;
 			case 4:
-				if(contadorlistaPasajeros >0)
+				if(contadorlistaPasajeros > 0)
 				{
 					do{
 						puts("|----------------------------------------MENU-DE-INFORMES----------------------------------------|");
@@ -76,10 +76,11 @@ int main(void)
 									printPassengers(listaPasajeros, TAM);
 								break;
 							case 2:
-
+									SortPromedioYTotalPasajeros(listaPasajeros, TAM);
 								break;
 							case 3:
-
+									sorPassengerByFlyCodeAndFlightStatus(listaPasajeros,TAM,0);
+									printPassengers(listaPasajeros, TAM);
 								break;
 							case 4:
 									puts("Saliendo...");
